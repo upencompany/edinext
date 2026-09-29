@@ -1,76 +1,61 @@
-# Edinext — sito istituzionale
+# Edinext — corporate website
 
-Guida per sviluppatori (TR): [docs/GELISTIRME-REHBERI.md](docs/GELISTIRME-REHBERI.md)
+Complete redesign of [edinext.it](https://edinext.it): Next.js 16 (App Router), TypeScript, Tailwind CSS 4.
+Italian (default, `/it`) and English (`/en`).
 
-Redesign completo di [edinext.it](https://edinext.it): Next.js 16 (App Router), TypeScript, Tailwind CSS 4, italiano (default) e inglese.
+**Developer guide:** [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) — principles, patterns, and how to add a page,
+a language, a product or a news item.
 
 ```bash
 npm install
 npm run dev        # http://localhost:3000 → /it
+npm run check      # TypeScript + ESLint
 npm run build && npm start
 ```
 
-## Struttura
+## Deployment (Vercel)
 
-```text
-app/[locale]/…          pagine (cartelle con i segmenti italiani)
-app/api/contact         endpoint del modulo contatti
-app/og                  immagini Open Graph generate
-app/sitemap.ts, robots.ts, manifest.ts, global-not-found.tsx
-components/layout       header (mega-menu), footer, reveal on scroll
-components/ecosystem    diagramma radiale, explorer, schemi (hub, gruppi, ciclo), architettura ReteAVIS
-components/sections     sezioni riutilizzabili (indice ambiti, timeline normativa, ciclo servizi, form…)
-components/ui           primitive editoriali, icone, logo, breadcrumbs, JSON-LD
-content/                TUTTI i contenuti (IT + EN), separati dalla presentazione → pronti per un CMS
-lib/                    i18n, SEO, dati strutturati, font, utility
-styles/globals.css      design system (token, tipografia, tema scuro `.theme-dark`, motion)
-public/brand            logo ufficiale (ritagliato, versione in negativo)
-public/documents        PDF di compliance scaricati dal vecchio sito
-public/media            fotografie usate in news e progetti
-```
+Import the GitHub repository in Vercel — the framework (Next.js) is detected automatically, no build settings needed.
+Set the environment variables below, then attach the `edinext.it` domain. Every push to `main` deploys to production;
+every other branch or pull request gets a preview URL (automatically `noindex`).
 
-## Lingue e URL
-
-- `/it/…` segmenti italiani (cartelle fisiche). `/en/…` segmenti inglesi tramite rewrite in `next.config.ts`
-  (`/en/solutions`, `/en/company`, `/en/careers`, `/en/contact`…); la variante italiana sotto `/en` fa redirect 308.
-- `lib/i18n.ts` → `href(locale, section, slug)` costruisce qualsiasi URL; lo switch lingua traduce il percorso corrente.
-- Tutti gli URL del vecchio WordPress (`/chi-siamo`, `/soluzioni/nol`, `/sian`, articoli, PDF…) hanno redirect 308.
-
-## Contenuti: fonti
-
-Ogni contenuto proviene da edinext.it (pagine, articoli, immagini informative e PDF pubblicati). Nulla è inventato.
-
-- **Soluzioni** (`content/solutions.ts`): 17 applicazioni, 15 con scheda (VETC e Strutture Sanitarie non avevano pagina).
-- **Informazioni che sul vecchio sito erano solo immagini**, ora testo strutturato e ridisegnato:
-  elenco vaccinazioni AVR, rete attorno al paziente (SMART), stakeholder LUNA, modello SPS, architettura ReteAVIS.
-- **Progetti** (`content/projects.ts`): casi costruiti solo dagli articoli pubblicati (ReteAVIS, NOL Taranto, NOLA ASL Lecce).
-- **Quadro normativo** (`content/ecosystem.ts`): le norme citate nelle schede prodotto, con data completa.
-- **Rating di legalità**: punteggio ★★ e data (21/05/2024) dalla comunicazione AGCM pubblicata; PEC dalla stessa comunicazione.
-
-### Da verificare con Edinext prima della messa online
-
-1. **Rating di legalità** — dura 2 anni dal rilascio (maggio 2024): confermare il rinnovo.
-2. **PEC `edinext@pec.it`** — presa dalla lettera AGCM; confermare che vada pubblicata.
-3. **Privacy policy** — rimossi i paragrafi WordPress (cookie di login/commenti) non più applicabili; testo da far validare al legale.
-4. **Foto** — `ponteggio-cantiere.jpg` è accreditata a Il Sole 24 Ore (come sul vecchio sito): verificare i diritti d’uso.
-5. **“ANAS”** tra i sistemi nazionali di SMART è riportato come sul vecchio sito (forse “ANA”, Anagrafe Nazionale Assistiti).
-6. **Modulo contatti** — impostare `CONTACT_WEBHOOK_URL` (relay e-mail, ticketing, automazione). Senza, l’endpoint risponde 503
-   e il modulo indirizza a info@edinext.it: non finge mai un invio riuscito.
-7. **Fotografie reali** di persone, sedi e servizi Edinext sostituirebbero bene le poche foto stock rimaste.
-
-## Variabili d’ambiente
-
-| Variabile | Uso |
+| Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | URL canonico (default `https://edinext.it`) |
-| `ALLOW_INDEXING` | `true` per consentire l’indicizzazione fuori da Vercel (su Vercel solo la production è indicizzabile) |
-| `CONTACT_WEBHOOK_URL` | destinazione POST JSON dei messaggi del modulo contatti |
+| `NEXT_PUBLIC_SITE_URL` | Canonical origin, default `https://edinext.it` |
+| `CONTACT_WEBHOOK_URL` | Endpoint receiving contact form messages (POST JSON). Without it the form points to info@edinext.it and never pretends a message was sent. |
+| `CONTACT_WEBHOOK_SECRET` | Optional HMAC-SHA256 key, sent as `X-Edinext-Signature` |
+| `ALLOW_INDEXING` | `true` to allow indexing when hosting outside Vercel |
 
-## Accessibilità, SEO, performance
+## Content sources
 
-- HTML semantico, skip link, focus visibile, menu da tastiera (Esc chiude), `aria-pressed`/`aria-live` nell’explorer,
-  form con errori collegati ai campi e riepilogo focalizzato, `prefers-reduced-motion` rispettato ovunque.
-- Metadata per pagina, canonical, hreflang (`it`, `en`, `x-default`), Open Graph dinamico, sitemap con alternates, robots,
-  JSON-LD (Organization, WebSite, BreadcrumbList, SoftwareApplication, NewsArticle, JobPosting).
-- 81 pagine statiche (SSG), font self-hosted (Geist), immagini `next/image` AVIF/WebP, JS client solo per header, explorer,
-  ciclo servizi, scroller e form.
+All business content comes from edinext.it (pages, articles, information-bearing images and published PDFs).
+Nothing is invented.
+
+- **Solutions** (`content/solutions.ts`): 17 applications, 15 with a dedicated page (VETC and Strutture Sanitarie had none).
+- **Information that was only in images** is now structured text with redrawn diagrams: AVR vaccination list,
+  SMART care network, LUNA stakeholders, SPS school-health model, ReteAVIS architecture.
+- **Product logos** come from the /soluzioni page of the old site; products that only had generic stock icons get a
+  neutral monogram tile.
+- **Projects** (`content/projects.ts`): built only from published articles (ReteAVIS, NOL Taranto, NOLA ASL Lecce).
+- **Regulatory framework** (`content/ecosystem.ts`): the regulations cited on the product pages.
+- **Legality rating**: score ★★ and date (21 May 2024) from the published AGCM letter; the PEC address from the same letter.
+
+### To confirm with Edinext before going live
+
+1. **Legality rating** — valid for 2 years from May 2024: confirm renewal.
+2. **PEC `edinext@pec.it`** — taken from the AGCM letter; confirm it may be published.
+3. **Privacy notice** — WordPress-only paragraphs (login/comment cookies) were removed; have it reviewed by legal counsel.
+4. **Photo** — `ponteggio-cantiere.jpg` is credited to Il Sole 24 Ore (as on the old site): verify usage rights.
+5. **“ANAS”** among SMART’s national systems is kept as on the old site (possibly “ANA”, Anagrafe Nazionale Assistiti).
+6. **Contact form** — set `CONTACT_WEBHOOK_URL`.
+7. **Real photography** of Edinext people, offices and services would replace the few remaining stock photos well.
+
+## Quality
+
+- Accessibility: semantic HTML, skip link, visible focus, keyboard menus (Esc closes), `aria-pressed`/`aria-live`
+  in the explorer, linked form errors with a focused summary, `prefers-reduced-motion` everywhere.
+- SEO: per-page metadata, canonical, hreflang (`it`, `en`, `x-default`), dynamic Open Graph, sitemap with alternates,
+  robots, JSON-LD (Organization, WebSite, BreadcrumbList, SoftwareApplication, NewsArticle, JobPosting),
+  308 redirects from every old WordPress URL.
+- Security: CSP, HSTS, frame blocking, COOP/CORP, Permissions-Policy; hardened contact endpoint.
+- Lighthouse (mobile, simulated slow 4G): Performance 94–97, Accessibility 100, Best Practices 100, SEO 100.

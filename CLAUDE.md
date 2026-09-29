@@ -1,2 +1,2 @@
 @AGENTS.md
-@docs/GELISTIRME-REHBERI.md
+@docs/DEVELOPMENT.md
