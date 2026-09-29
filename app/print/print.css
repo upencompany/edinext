@@ -1,0 +1,45 @@
+/* Page setup for the printable brand documents: one 16:9 slide per page. */
+@page {
+  size: 1600px 900px;
+  margin: 0;
+}
+
+html,
+body {
+  margin: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.slide {
+  position: relative;
+  width: 1600px;
+  height: 900px;
+  overflow: hidden;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  break-after: page;
+  page-break-after: always;
+}
+
+.slide:last-child {
+  break-after: auto;
+  page-break-after: auto;
+}
+
+@media screen {
+  body {
+    background: #c9d1dc;
+  }
+  .slide {
+    margin: 32px auto;
+    box-shadow: 0 30px 60px -30px rgb(11 18 32 / 0.45);
+  }
+}
+
+@media print {
+  html.js [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

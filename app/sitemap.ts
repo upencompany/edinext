@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { section: "news", priority: 0.6 },
     { section: "compliance", priority: 0.5 },
     { section: "careers", priority: 0.5 },
+    { section: "pressKit", priority: 0.5 },
     { section: "contact", priority: 0.6 },
     { section: "privacy", priority: 0.2 },
     ...families.filter((f) => f.slug).map((f) => ({ section: "solutions" as const, slug: f.slug!, priority: 0.8 })),
