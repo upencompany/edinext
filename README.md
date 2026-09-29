@@ -63,6 +63,7 @@ Ogni contenuto proviene da edinext.it (pagine, articoli, immagini informative e 
 | Variabile | Uso |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | URL canonico (default `https://edinext.it`) |
+| `ALLOW_INDEXING` | `true` per consentire l’indicizzazione fuori da Vercel (su Vercel solo la production è indicizzabile) |
 | `CONTACT_WEBHOOK_URL` | destinazione POST JSON dei messaggi del modulo contatti |
 
 ## Accessibilità, SEO, performance

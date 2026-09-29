@@ -9,7 +9,7 @@ import { JsonLd } from "@/components/ui/JsonLd";
 import { ui } from "@/content/ui";
 import { fontVariables } from "@/lib/fonts";
 import { defaultLocale, isLocale, localeNames, locales } from "@/lib/i18n";
-import { siteUrl } from "@/lib/seo";
+import { allowIndexing, siteUrl } from "@/lib/seo";
 import { organizationSchema, websiteSchema } from "@/lib/structured-data";
 
 export const dynamicParams = false;
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
     applicationName: "Edinext",
     authors: [{ name: "Edinext S.r.l." }],
     formatDetection: { telephone: false },
-    robots: { index: true, follow: true },
+    robots: allowIndexing ? { index: true, follow: true } : { index: false, follow: false },
   };
 }
 
