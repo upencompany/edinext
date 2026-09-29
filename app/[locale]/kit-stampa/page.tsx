@@ -8,8 +8,10 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { ArrowLink, Kicker, PageIntro, SectionHead } from "@/components/ui/Editorial";
 import { ArrowUpRight, Download } from "@/components/ui/Icons";
 import { ProductMark } from "@/components/ui/ProductMark";
+import { mockupScenes } from "@/components/brandbook/Mockups";
 import {
   boilerplate,
+  brandbook,
   brandColors,
   brandVersion,
   hasColorway,
@@ -305,10 +307,37 @@ export default async function PressKitPage({ params }: PageProps<"/[locale]/kit-
         </div>
       </section>
 
-      {/* Product marks */}
-      <section aria-labelledby="pk-products" className="section-y">
+      {/* Mockups */}
+      <section aria-labelledby="pk-mockups" className="section-y">
         <div className="wrap">
-          <SectionHead index="06" label={t.products.label} title={t.products.title} id="pk-products" />
+          <SectionHead index="06" label={t.mockups.label} title={t.mockups.title} lede={t.mockups.lede} id="pk-mockups" />
+          <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {mockupScenes.map((scene, i) => (
+              <li key={scene} className={cx("group overflow-hidden rounded-2xl border border-line", i === 0 && "sm:col-span-2 lg:col-span-2 lg:row-span-2")}>
+                <a href={`/press-kit/mockups/edinext-mockup-${scene}.png`} download className="block">
+                  <Image
+                    src={`/press-kit/mockups/edinext-mockup-${scene}.webp`}
+                    alt={brandbook[dl].applications.mockups[scene]}
+                    width={1672}
+                    height={941}
+                    sizes={i === 0 ? "(min-width: 1024px) 66vw, 100vw" : "(min-width: 1024px) 33vw, 100vw"}
+                    className="h-auto w-full transition-transform duration-700 group-hover:scale-[1.02]"
+                  />
+                  <span className="flex items-center justify-between gap-3 border-t border-line px-4 py-3 text-[0.9375rem] font-medium">
+                    {brandbook[dl].applications.mockups[scene]}
+                    <Download size={15} />
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Product marks */}
+      <section aria-labelledby="pk-products" className="section-y border-t border-line">
+        <div className="wrap">
+          <SectionHead index="07" label={t.products.label} title={t.products.title} id="pk-products" />
           <ul className="mt-12 grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6">
             {solutions.map((p) => (
               <li key={p.slug} className="flex flex-col items-center gap-3 rounded-2xl border border-line p-5 text-center">
