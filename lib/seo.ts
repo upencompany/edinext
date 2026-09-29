@@ -4,6 +4,13 @@ import { defaultLocale, href, localeNames, locales, type Locale, type SectionKey
 
 export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://edinext.it").replace(/\/$/, "");
 
+/**
+ * Only the production deployment may be indexed. Vercel previews
+ * (VERCEL_ENV=preview) and local builds answer "noindex" everywhere.
+ * Set ALLOW_INDEXING=true to force indexing outside Vercel.
+ */
+export const allowIndexing = process.env.VERCEL_ENV === "production" || process.env.ALLOW_INDEXING === "true";
+
 export function absoluteUrl(path: string) {
   return `${siteUrl}${path.startsWith("/") ? path : `/${path}`}`;
 }

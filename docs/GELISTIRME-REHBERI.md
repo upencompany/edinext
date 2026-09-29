@@ -172,4 +172,5 @@ Commit öncesi: `npm run check && npm run build`.
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Kanonik adres (varsayılan `https://edinext.it`). Derleme anında okunur. |
 | `CONTACT_WEBHOOK_URL` | İletişim formu mesajlarının POST edileceği adres. Yoksa form e-posta adresine yönlendirir. |
+| `ALLOW_INDEXING` | Vercel dışında barındırılırsa `true` yapılmalı. Vercel’de sadece production dağıtımı indekslenir; preview’lar otomatik `noindex`. |
 | `CONTACT_WEBHOOK_SECRET` | (İsteğe bağlı) Webhook gövdesinin HMAC-SHA256 imzası için anahtar → `X-Edinext-Signature` başlığı. |
