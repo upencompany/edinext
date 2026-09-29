@@ -6,6 +6,7 @@
  *   npm run press-kit -- --pdf        also renders the brand guidelines and colour
  *                                     palette PDFs (needs the
  *                                     site running — use a production build, see below)
+ *   npm run press-kit -- --pdf --no-zip  refresh PDFs without rebuilding the ZIP
  *
  * Sources of truth:
  *   brand/edinext-logo-master.svg     vector logo, grouped (#wordmark, #symbol, #tagline, #tagline-x)
@@ -150,6 +151,10 @@ if (!chrome) {
 
   // ── 4. PDFs rendered from the running site ────────────────────────────────
   if (withPdf) {
+    for (const scene of mockupScenes) {
+      const jpg = join(out, "mockups", `edinext-mockup-${scene}.jpg`);
+      if (!existsSync(jpg)) throw new Error(`Missing print-ready mockup: ${jpg}`);
+    }
     const docs = [
       { route: "brand-guidelines", file: `Edinext_Brand_Guidelines_${year}` },
       { route: "color-palette", file: `Edinext_Color_Palette_${year}` },
@@ -165,6 +170,7 @@ if (!chrome) {
 }
 
 // ── 5. Logo pack ZIP ────────────────────────────────────────────────────────
+if (!args.includes("--no-zip")) {
 const readme = `EDINEXT — LOGO PACK ${year}
 =========================
 
@@ -222,3 +228,4 @@ for (const slug of ["clicprevenzione", "nola", "nol", "clicspesal", "sian", "cli
 const zipPath = join(out, `Edinext_Logo_Pack_${year}.zip`);
 writeFileSync(zipPath, zipSync(zipFiles, { level: 9 }));
 console.log(`✓ ${relative(root, zipPath)} (${Math.round(statSync(zipPath).size / 1024)} KB, ${Object.keys(zipFiles).length} files)`);
+}
