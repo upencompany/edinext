@@ -21,6 +21,7 @@ export const sections = {
   compliance: { it: "compliance", en: "compliance" },
   privacy: { it: "privacy-policy", en: "privacy-policy" },
   careers: { it: "lavora-con-noi", en: "careers" },
+  pressKit: { it: "kit-stampa", en: "press-kit" },
   contact: { it: "contatti", en: "contact" },
 } as const satisfies Record<string, Record<Locale, string>>;
 

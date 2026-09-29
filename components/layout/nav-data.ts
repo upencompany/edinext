@@ -60,6 +60,7 @@ export function buildNav(locale: Locale): NavData {
         children: [
           { label: n.companyOverview, href: href(locale, "company") },
           { label: n.careers, href: href(locale, "careers") },
+          { label: n.pressKit, href: href(locale, "pressKit") },
         ],
       },
       { id: "solutions", label: n.solutions, href: href(locale, "solutions"), match: href(locale, "solutions"), mega: true },

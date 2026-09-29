@@ -4,7 +4,7 @@ import { absoluteUrl, allowIndexing, siteUrl } from "@/lib/seo";
 export default function robots(): MetadataRoute.Robots {
   if (!allowIndexing) return { rules: [{ userAgent: "*", disallow: "/" }] };
   return {
-    rules: [{ userAgent: "*", allow: "/", disallow: ["/api/"] }],
+    rules: [{ userAgent: "*", allow: "/", disallow: ["/api/", "/print/"] }],
     sitemap: absoluteUrl("/sitemap.xml"),
     host: siteUrl,
   };

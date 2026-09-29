@@ -17,6 +17,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
     { label: t.nav.projects, href: href(locale, "projects") },
     { label: t.nav.news, href: href(locale, "news") },
     { label: t.nav.careers, href: href(locale, "careers") },
+    { label: t.nav.pressKit, href: href(locale, "pressKit") },
     { label: t.nav.contact, href: href(locale, "contact") },
   ];
   const legal = [
