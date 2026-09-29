@@ -3,8 +3,9 @@
  * Builds the Edinext press kit into public/press-kit/.
  *
  *   npm run press-kit                 logo SVG/PNG variants + logo pack ZIP
- *   npm run press-kit -- --pdf        also prints the brand guidelines and colour
- *                                     palette PDFs (needs the site running, see below)
+ *   npm run press-kit -- --pdf        also renders the brand guidelines and colour
+ *                                     palette PDFs (needs the
+ *                                     site running — use a production build, see below)
  *
  * Sources of truth:
  *   brand/edinext-logo-master.svg     vector logo, grouped (#wordmark, #symbol, #tagline, #tagline-x)
@@ -31,6 +32,8 @@ const baseUrl = (args.find((a) => a.startsWith("--url="))?.slice(6) ?? "http://l
 const tokens = JSON.parse(readFileSync(join(root, "brand", "tokens.json"), "utf8"));
 const master = readFileSync(join(root, tokens.logo.master), "utf8");
 const year = tokens.version.slice(0, 4);
+/** Keep in sync with components/brandbook/Mockups.tsx → mockupScenes. */
+const mockupScenes = ["card-thermos", "stationery", "devices", "badge", "notebook", "tote", "mug", "rollup", "signage"];
 
 // ── 1. Colour tokens must match the website ─────────────────────────────────
 const css = readFileSync(join(root, "styles", "globals.css"), "utf8");
@@ -145,7 +148,7 @@ if (!chrome) {
   }
   console.log(`✓ ${count} transparent PNG files`);
 
-  // ── 4. PDFs printed from the site's /print routes ─────────────────────────
+  // ── 4. PDFs rendered from the running site ────────────────────────────────
   if (withPdf) {
     const docs = [
       { route: "brand-guidelines", file: `Edinext_Brand_Guidelines_${year}` },
@@ -169,6 +172,7 @@ Contents
   svg/            vector logos (preferred for print and digital)
   png/            transparent PNG exports, width in pixels in the file name
   products/       product marks of Edinext applications
+  mockups/        illustrative application concepts (not photographs of produced materials)
 
 Variants
   edinext-logo-*       logo with the "Innovare × Crescere" tagline
@@ -204,6 +208,11 @@ for (const f of files) {
     const png = join(out, "logos", "png", `${f.name}-${w}.png`);
     if (existsSync(png)) zipFiles[`png/${f.name}-${w}.png`] = readFileSync(png);
   }
+}
+for (const scene of mockupScenes) {
+  const png = join(out, "mockups", `edinext-mockup-${scene}.png`);
+  if (!existsSync(png)) throw new Error(`Missing press-kit mockup: ${png}`);
+  zipFiles[`mockups/edinext-mockup-${scene}.png`] = readFileSync(png);
 }
 const productsDir = join(root, "public", "brand", "products");
 for (const slug of ["clicprevenzione", "nola", "nol", "clicspesal", "sian", "clicvaccino", "spuv", "smart", "luna", "geco"]) {

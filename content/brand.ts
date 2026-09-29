@@ -204,6 +204,8 @@ export const brandbook = defineLocalized({
       socialBody: "Avatar con il simbolo X; anteprime di condivisione con titolo e logotipo in negativo.",
       namePlaceholder: "Nome Cognome",
       rolePlaceholder: "Ruolo",
+      mockupNote: "Simulazione d’uso · immagine illustrativa",
+      mockups: { "card-thermos": "Biglietto da visita e termos", "stationery": "Carta intestata e buste", "devices": "Sito web e dispositivi", "badge": "Badge per eventi", "notebook": "Quaderno e penna", "tote": "Shopper in tela", "mug": "Tazza", "rollup": "Roll-up per eventi", "signage": "Insegna per la sede" },
     },
     contacts: {
       title: "Contatti",
@@ -343,6 +345,8 @@ export const brandbook = defineLocalized({
       socialBody: "Avatar with the X symbol; share previews with title and reverse wordmark.",
       namePlaceholder: "First Last",
       rolePlaceholder: "Role",
+      mockupNote: "Application concept · illustrative image",
+      mockups: { "card-thermos": "Business card and thermos", "stationery": "Letterhead and envelopes", "devices": "Website and devices", "badge": "Event badge", "notebook": "Notebook and pen", "tote": "Tote bag", "mug": "Mug", "rollup": "Event roll-up", "signage": "Office sign" },
     },
     contacts: {
       title: "Contacts",
@@ -397,6 +401,7 @@ export const pressKitPage = defineLocalized({
       copied: "Copiato",
       facts: "In sintesi",
     },
+    mockups: { label: "Applicazioni", title: "Il marchio in uso.", lede: "Visualizzazioni illustrative del marchio su oggetti e supporti reali. Sono concept, non fotografie di materiali prodotti o della sede aziendale. I PNG ad alta risoluzione sono inclusi nel pacchetto logo." },
     products: { label: "Marchi di prodotto", title: "Le applicazioni." },
     contact: {
       label: "Contatti stampa",
@@ -443,6 +448,7 @@ export const pressKitPage = defineLocalized({
       copied: "Copied",
       facts: "At a glance",
     },
+    mockups: { label: "Applications", title: "The brand in use.", lede: "Illustrative visualisations of the brand on physical objects and media. These are concepts, not photographs of produced materials or company premises. High-resolution PNGs are included in the logo pack." },
     products: { label: "Product marks", title: "The applications." },
     contact: {
       label: "Press contact",

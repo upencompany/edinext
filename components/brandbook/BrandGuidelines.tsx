@@ -8,6 +8,7 @@ import { actors } from "@/content/ecosystem";
 import { companyPage, home } from "@/content/pages";
 import { solutions } from "@/content/solutions";
 import { colorSlides } from "./ColorSlides";
+import { Mockup, mockupScenes } from "./Mockups";
 import { numberSlides } from "./numbering";
 import { BrandImage, CLEAR_SPACE_RATIO, CrossBadge, SectionSlide, Slide, SlideTitle } from "./Slide";
 
@@ -410,39 +411,17 @@ export function BrandGuidelines({ locale }: { locale: BrandLocale }) {
 
     // ── 06 Applications ────────────────────────────────────────────────────
     <SectionSlide key="s6" index="06" title={s.applications} docTitle={doc} />,
-    <Slide key="web" docTitle={doc} section={s.applications}>
-      <div className="grid h-full grid-cols-[1fr_1.6fr] items-center gap-14">
-        <SlideTitle kicker={s.applications} lede={t.applications.webBody}>
-          {t.applications.webTitle}
-        </SlideTitle>
-        <div className="overflow-hidden rounded-2xl border border-line shadow-[0_30px_60px_-30px_rgba(11,18,32,0.35)]">
-          <div className="flex items-center gap-2 border-b border-line bg-paper-2 px-4 py-3">
-            {["#E3E8EF", "#E3E8EF", "#E3E8EF"].map((c, i) => (
-              <span key={i} className="h-3 w-3 rounded-full" style={{ background: c }} />
-            ))}
-            <span className="ml-4 font-mono text-[13px] text-ink-3">edinext.it</span>
-          </div>
-          <Image src={`/press-kit/assets/website-home-${locale}.jpg`} alt="" width={1440} height={900} unoptimized className="block h-auto w-full" />
-        </div>
-      </div>
-    </Slide>,
-    <Slide key="stationery" docTitle={doc} section={s.applications}>
-      <div className="grid h-full grid-cols-[1.25fr_1fr] gap-12">
-        <div>
-          <p className="text-[26px] font-semibold tracking-tight">{t.applications.cardTitle}</p>
-          <p className="mt-1 text-[16px] text-ink-2">{t.applications.cardBody}</p>
-          <div className="mt-8 flex gap-6">
-            <BusinessCardFront locale={locale} />
-            <BusinessCardBack />
-          </div>
-        </div>
-        <div>
-          <p className="text-[26px] font-semibold tracking-tight">{t.applications.letterTitle}</p>
-          <p className="mt-1 text-[16px] text-ink-2">{t.applications.letterBody}</p>
-          <Letterhead />
-        </div>
-      </div>
-    </Slide>,
+    ...mockupScenes.map((scene) => (
+      <section key={`mockup-${scene}`} className="slide">
+        <Mockup scene={scene} />
+        <p className="absolute left-[48px] top-[40px] rounded-full bg-white/90 px-5 py-2.5 text-[17px] font-semibold text-[#0B1220] shadow-[0_8px_24px_-12px_rgba(11,18,32,.5)]">
+          {s.applications} · {t.applications.mockups[scene]}
+        </p>
+        <p className="absolute bottom-[32px] right-[40px] rounded-full bg-white/90 px-4 py-2 text-[14px] font-medium text-[#34455A]">
+          {t.applications.mockupNote}
+        </p>
+      </section>
+    )),
     <Slide key="digital" docTitle={doc} section={s.applications}>
       <div className="grid h-full grid-cols-3 gap-8">
         <div>
@@ -560,51 +539,6 @@ function ClearSpace() {
           </span>
         ))}
       </div>
-    </div>
-  );
-}
-
-function BusinessCardFront({ locale }: { locale: BrandLocale }) {
-  const t = brandbook[locale].applications;
-  return (
-    <div className="flex h-[240px] w-[400px] flex-col justify-between rounded-xl border border-line bg-white p-7 shadow-[0_20px_40px_-24px_rgba(11,18,32,0.35)]">
-      <BrandImage variant="wordmark" colorway="color" height={34} />
-      <div className="text-[13px] leading-relaxed">
-        <p className="text-[17px] font-semibold">{t.namePlaceholder}</p>
-        <p className="text-ink-3">{t.rolePlaceholder}</p>
-        <p className="mt-3 text-ink-2">
-          {company.phone.display} · {company.email}
-          <br />
-          {company.address.street}, {company.address.postalCode} {company.address.city}
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function BusinessCardBack() {
-  return (
-    <div className="theme-dark flex h-[240px] w-[400px] flex-col items-center justify-center rounded-xl shadow-[0_20px_40px_-24px_rgba(11,18,32,0.35)]">
-      <BrandImage variant="symbol" colorway="color" height={96} />
-      <span className="t-label mt-5 text-ink-3">www.edinext.it</span>
-    </div>
-  );
-}
-
-function Letterhead() {
-  return (
-    <div className="mx-auto mt-8 flex h-[520px] w-[368px] flex-col justify-between rounded-md border border-line bg-white p-8 shadow-[0_20px_40px_-24px_rgba(11,18,32,0.35)]">
-      <BrandImage variant="logo" colorway="color" height={44} />
-      <div className="space-y-2">
-        {[92, 100, 88, 96, 70].map((w, i) => (
-          <span key={i} className="block h-1.5 rounded bg-line" style={{ width: `${w}%` }} />
-        ))}
-      </div>
-      <p className="border-t border-line pt-3 text-[8.5px] leading-snug text-ink-3">
-        {company.legalName} · {company.address.street}, {company.address.postalCode} {company.address.city} ({company.address.province}) · P. IVA {company.vat}
-        <br />
-        {company.phone.display} · {company.email} · www.edinext.it
-      </p>
     </div>
   );
 }

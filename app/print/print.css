@@ -22,6 +22,11 @@ body {
   page-break-after: always;
 }
 
+/* Never show the Next.js dev indicator in exported images. */
+nextjs-portal {
+  display: none !important;
+}
+
 .slide:last-child {
   break-after: auto;
   page-break-after: auto;
