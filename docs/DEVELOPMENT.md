@@ -177,6 +177,6 @@ Before committing: `npm run check && npm run build`.
 | Variable | Purpose |
 | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | Canonical origin (default `https://edinext.it`). Read at build time. |
-| `ALLOW_INDEXING` | Set to `true` when hosting outside Vercel. On Vercel only production is indexable. |
+| `ALLOW_INDEXING` | `true` when hosting outside Vercel. `false` keeps production `noindex` (e.g. before the domain moves). On Vercel only production is indexable by default. |
 | `CONTACT_WEBHOOK_URL` | Endpoint receiving contact form messages (POST JSON). Without it the form points to the e-mail address. |
 | `CONTACT_WEBHOOK_SECRET` | Optional HMAC-SHA256 key → `X-Edinext-Signature` header on webhook calls. |
