@@ -240,10 +240,18 @@
 ::view-transition-new(.page) {
   animation: 420ms var(--ease-out-quart) 120ms both vt-rise;
 }
+
+/* Mobile text blocks are tall and reflow between routes. Keeping the old
+   snapshot visible under the incoming page makes both copies overlap. */
+@media (width < 48rem) {
+  ::view-transition-old(.page) { display: none; }
+  ::view-transition-new(.page) { animation: 240ms var(--ease-out-quart) both vt-fade-in; }
+}
 ::view-transition-group(site-header) { animation: none; z-index: 100; }
 ::view-transition-old(site-header) { display: none; }
 ::view-transition-new(site-header) { animation: none; }
 @keyframes vt-fade-out { to { opacity: 0; } }
+@keyframes vt-fade-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes vt-rise {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: none; }

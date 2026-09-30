@@ -182,7 +182,7 @@ export default async function ArticlePage({ params }: PageProps<"/[locale]/news/
             <p className="!mt-10">
               <a
                 href={`mailto:${company.email}?subject=${encodeURIComponent("Candidatura Oracle DBA Senior")}`}
-                className="inline-flex items-center gap-3 rounded-full bg-ink px-6 py-3.5 font-medium text-paper no-underline hover:bg-brand-ink"
+                className="inline-flex items-center gap-3 rounded-full !bg-brand px-6 py-3.5 font-medium !text-white !no-underline hover:!bg-brand-ink"
               >
                 {u.labels.applyByEmail}
                 <ArrowRight size={16} />
