@@ -65,6 +65,15 @@ export function BrandX({ size = 20, className, ...props }: IconProps) {
   );
 }
 
+export function Search({ size = 18, ...props }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 20 20" fill="none" aria-hidden="true" {...props}>
+      <circle cx="8.5" cy="8.5" r="5.75" stroke="currentColor" strokeWidth="1.5" />
+      <path d="m13 13 4.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" />
+    </svg>
+  );
+}
+
 export function Menu({ size = 22, ...props }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 22 22" fill="none" aria-hidden="true" {...props}>

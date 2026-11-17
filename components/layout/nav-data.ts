@@ -2,6 +2,7 @@ import { families } from "@/content/ecosystem";
 import { solutions } from "@/content/solutions";
 import { ui } from "@/content/ui";
 import { href, type Locale } from "@/lib/i18n";
+import type { SearchLabels } from "./SiteSearch";
 
 export interface NavLink {
   label: string;
@@ -36,6 +37,7 @@ export interface NavData {
   families: NavFamily[];
   overview: NavLink;
   contact: NavLink;
+  search: SearchLabels;
   labels: {
     nav: string;
     menu: string;
@@ -96,6 +98,7 @@ export function buildNav(locale: Locale): NavData {
     })),
     overview: { label: n.solutionsOverview, href: href(locale, "solutions") },
     contact: { label: n.contact, href: href(locale, "contact") },
+    search: { labels: t.search, indexUrl: `/${locale}/search-index.json` },
     labels: {
       nav: n.label,
       menu: n.menu,

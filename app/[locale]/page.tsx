@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { EcosystemExplorer } from "@/components/ecosystem/EcosystemExplorer";
-import { explorerProps } from "@/components/ecosystem/explorer-data";
 import { FlowSignals } from "@/components/ecosystem/FlowSignals";
 import { RadialDiagram } from "@/components/ecosystem/RadialDiagram";
 import { AreasIndex } from "@/components/sections/AreasIndex";
 import { ContactBand } from "@/components/sections/ContactBand";
+import { finderProps } from "@/components/sections/finder-data";
 import { NewsList } from "@/components/sections/NewsList";
 import { NormTimeline } from "@/components/sections/NormTimeline";
 import { QualityStrip } from "@/components/sections/QualityStrip";
+import { SolutionFinder } from "@/components/sections/SolutionFinder";
 import { ArrowLink, ButtonLink, Kicker, SectionHead } from "@/components/ui/Editorial";
 import { ArrowRight } from "@/components/ui/Icons";
 import { company } from "@/content/company";
@@ -51,7 +51,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             </h1>
             <p className="t-lede mt-10 max-w-2xl">{t.lede}</p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href={href(locale, "solutions")}>{t.ctaPrimary}</ButtonLink>
+              <ButtonLink href={href(locale, "home", undefined, "trova")}>{t.ctaPrimary}</ButtonLink>
               <ButtonLink href={href(locale, "contact")} variant="outline">
                 {t.ctaSecondary}
               </ButtonLink>
@@ -120,12 +120,12 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </div>
       </section>
 
-      {/* ── 02 · Ecosystem ───────────────────────────────────────────── */}
-      <section aria-labelledby="eco-title" className="section-y">
+      {/* ── 02 · Solution finder ─────────────────────────────────────── */}
+      <section id="trova" aria-labelledby="finder-title" className="section-y">
         <div className="wrap">
-          <SectionHead index="02" label={t.ecosystem.label} title={t.ecosystem.title} lede={t.ecosystem.lede} id="eco-title" />
+          <SectionHead index="02" label={ui[locale].finder.label} title={ui[locale].finder.title} lede={ui[locale].finder.lede} id="finder-title" />
           <div className="mt-14 md:mt-20">
-            <EcosystemExplorer {...explorerProps(locale)} compact />
+            <SolutionFinder {...finderProps(locale)} />
           </div>
           <div className="mt-12 flex justify-end">
             <ArrowLink href={href(locale, "solutions")}>{t.ecosystem.link}</ArrowLink>

@@ -232,6 +232,26 @@
 }
 .line-mask { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
 
+/* ── Solution finder: each step slides in, options cascade ────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .finder-step { animation: finder-in 0.5s var(--ease-out-quart) both; }
+  .finder-item { animation: finder-in 0.55s var(--ease-out-quart) both; animation-delay: calc(var(--i, 0) * 55ms + 80ms); }
+}
+@keyframes finder-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ── Search dialog ─────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .search-dialog[open] { animation: search-in 0.28s var(--ease-out-quart); }
+  .search-dialog[open]::backdrop { animation: vt-fade-in 0.28s ease; }
+}
+@keyframes search-in {
+  from { opacity: 0; transform: translateY(-10px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
 /* ── View transitions between pages ─────────────────────────────────────── */
 ::view-transition { pointer-events: none; }
 ::view-transition-old(.page) {

@@ -9,6 +9,7 @@ import { ArrowRight, Chevron, Close, Menu } from "@/components/ui/Icons";
 import { cx } from "@/lib/format";
 import { localeNames, locales, publicPath, switchLocalePath } from "@/lib/i18n";
 import type { NavData, NavItem } from "./nav-data";
+import { SiteSearch } from "./SiteSearch";
 
 export function SiteHeader({ nav }: { nav: NavData }) {
   const pathname = publicPath(usePathname() ?? nav.homeHref);
@@ -16,6 +17,7 @@ export function SiteHeader({ nav }: { nav: NavData }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [panelTop, setPanelTop] = useState(0);
   const headerRef = useRef<HTMLElement>(null);
   const hoverTimer = useRef<number | undefined>(undefined);
   const baseId = useId();
@@ -191,6 +193,7 @@ export function SiteHeader({ nav }: { nav: NavData }) {
           </nav>
 
           <div className="ml-auto flex items-center gap-2 lg:ml-4">
+            <SiteSearch {...nav.search} />
             <ul className="flex items-center" aria-label={nav.labels.language}>
               {other.map((l) => (
                 <li key={l}>
@@ -217,7 +220,11 @@ export function SiteHeader({ nav }: { nav: NavData }) {
               className="-mr-2 flex items-center gap-2 p-2 lg:hidden"
               aria-expanded={mobileOpen}
               aria-controls={`${baseId}-mobile`}
-              onClick={() => setMobileOpen((v) => !v)}
+              onClick={() => {
+                // The panel starts under the header, wherever the header is (the top bar may still be visible).
+                setPanelTop(headerRef.current?.getBoundingClientRect().bottom ?? 0);
+                setMobileOpen((v) => !v);
+              }}
             >
               <span className="t-label">{mobileOpen ? nav.labels.close : nav.labels.menu}</span>
               {mobileOpen ? <Close /> : <Menu />}
@@ -294,7 +301,8 @@ export function SiteHeader({ nav }: { nav: NavData }) {
       <div
         id={`${baseId}-mobile`}
         hidden={!mobileOpen}
-        className="fixed inset-x-0 bottom-0 top-(--header-h) overflow-y-auto bg-paper lg:hidden"
+        style={{ top: panelTop }}
+        className="fixed inset-x-0 bottom-0 overflow-y-auto bg-paper lg:hidden"
       >
         <nav aria-label={nav.labels.nav} className="wrap pb-16 pt-4">
           <ul className="divide-y divide-line border-b border-line">

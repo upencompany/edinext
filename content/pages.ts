@@ -16,7 +16,7 @@ export const home = defineLocalized({
     figureCaption: "Ogni linea è una relazione reale: un’applicazione Edinext e il gruppo di persone che la usa.",
     lede:
       "Edinext progetta, realizza e gestisce le applicazioni con cui i Dipartimenti di Prevenzione delle ASL, le strutture sanitarie, sociosanitarie e sociali e le Regioni governano processi complessi — e con cui cittadini e imprese dialogano con loro.",
-    ctaPrimary: "Esplora l’ecosistema",
+    ctaPrimary: "Trova la tua soluzione",
     ctaSecondary: "Parla con noi",
     facts: [
       { value: "30+", label: "Dipartimenti di Prevenzione delle ASL informatizzati" },
@@ -79,7 +79,7 @@ export const home = defineLocalized({
     figureCaption: "Each line is a real relationship: an Edinext application and the group of people who use it.",
     lede:
       "Edinext designs, builds and runs the applications that Italian local health authorities’ Prevention Departments, healthcare and social-care facilities and regional governments use to manage complex processes — and through which citizens and businesses communicate with them.",
-    ctaPrimary: "Explore the ecosystem",
+    ctaPrimary: "Find your solution",
     ctaSecondary: "Talk to us",
     facts: [
       { value: "30+", label: "health authority Prevention Departments digitised" },

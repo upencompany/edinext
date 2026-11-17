@@ -33,8 +33,19 @@ export function RadialDiagram({ locale, activeActor, activeApp, activeFamily, an
   const { apps, arcs, actorNodes, links } = layout;
   const focus = activeActor ?? null;
   const familyOf = new Map(apps.map((a) => [a.slug, a.family]));
-  const appOn = (slug: string, actors: ActorId[]) =>
-    activeApp ? activeApp === slug : activeFamily ? familyOf.get(slug) === activeFamily : focus ? actors.includes(focus) : true;
+  const filtered = Boolean(activeApp || activeFamily || focus);
+  /**
+   * Whether an application (optionally seen through one actor's link) matches the
+   * current selection. Actor and area filters combine: "prevention staff" + "vaccinations".
+   */
+  const matches = (slug: string, actors: ActorId[]) => {
+    if (activeApp) return activeApp === slug;
+    const familyOk = !activeFamily || familyOf.get(slug) === activeFamily;
+    const actorOk = !focus || actors.includes(focus);
+    return familyOk && actorOk;
+  };
+  const appOn = (slug: string, actors: ActorId[]) => matches(slug, actors);
+  const linkOn = (app: string, actor: ActorId) => (filtered ? matches(app, [actor]) : null);
 
   return (
     <svg
@@ -61,13 +72,7 @@ export function RadialDiagram({ locale, activeActor, activeApp, activeFamily, an
       {/* Links */}
       <g fill="none" strokeLinecap="round">
         {links.map((l, i) => {
-          const on = activeApp
-            ? l.app === activeApp
-            : activeFamily
-              ? familyOf.get(l.app) === activeFamily
-              : focus
-                ? l.actor === focus
-                : null;
+          const on = linkOn(l.app, l.actor);
           return (
             <path
               key={`${l.app}-${l.actor}`}
@@ -99,8 +104,7 @@ export function RadialDiagram({ locale, activeActor, activeApp, activeFamily, an
 
       {/* Actor nodes */}
       {actorNodes.map((n) => {
-        const linked = activeApp || activeFamily ? links.some((l) => l.actor === n.id && (activeApp ? l.app === activeApp : familyOf.get(l.app) === activeFamily)) : true;
-        const on = (!focus || focus === n.id) && linked;
+        const on = !filtered || links.some((l) => l.actor === n.id && linkOn(l.app, l.actor));
         const labelOffset = n.y < C ? -14 : 22;
         return (
           <g key={n.id} opacity={on ? 1 : 0.35} className="transition-opacity duration-300">

@@ -15,7 +15,8 @@ Code, comments and docs are in English. Site content is Italian (default) and En
 3. **No invented facts.** Every business fact comes from edinext.it or from Edinext’s official documents. New
    statistics, clients, references or certifications need a source (note it in a comment).
 4. **Server Components by default.** `"use client"` only for small interactive pieces: `SiteHeader`,
-   `EcosystemExplorer`, `FlowSignals`, `ServiceCycle`, `ScrollerControls`, `ContactForm`, `RevealObserver`, `error.tsx`.
+   `SiteSearch`, `EcosystemExplorer`, `SolutionFinder`, `FlowSignals`, `ServiceCycle`, `ScrollerControls`, `ContactForm`,
+   `RevealObserver`, `error.tsx`.
    Pass only serialisable data (strings, numbers, arrays) to client components — never functions.
 5. **Type safety = translation safety.** All multilingual content uses `Localized<T>` or `defineLocalized()`.
    When a locale is added, TypeScript reports every missing translation as an error.
@@ -34,6 +35,7 @@ app/
     page.tsx                Home
     soluzioni/[slug]/       Product pages (nol, smart…) and area pages (clicprevenzione…)
     error.tsx, not-found.tsx
+    search-index.json/      Static JSON search index per language (built from lib/search.ts)
     kit-stampa/             Press kit page (downloads, logos, colours, official copy)
   print/                    Separate root layout: printable brand documents (never indexed)
     [locale]/[doc]/         /print/{it|en}/{brand-guidelines|color-palette} → printed to PDF
@@ -41,9 +43,9 @@ app/
   og/route.tsx              Dynamic Open Graph image
   sitemap.ts, robots.ts, manifest.ts, global-not-found.tsx
 components/
-  layout/                   Header, footer, navigation data, scroll reveal
+  layout/                   Header, top bar, footer, navigation data, site search (Ctrl/⌘ K), scroll reveal
   ui/                       Building blocks: Kicker, SectionHead, PageIntro, ButtonLink, ArrowLink, Logo, ProductMark, CopyButton, Icons
-  sections/                 Page sections: ContactBand, AreasIndex, NormTimeline, ServiceCycle, NewsList, SolutionDetail…
+  sections/                 Page sections: SolutionFinder (home wizard), ContactBand, AreasIndex, NormTimeline, ServiceCycle, NewsList, SolutionDetail…
   ecosystem/                Diagrams: RadialDiagram (+ geometry), EcosystemExplorer, FlowSignals, HubDiagram, SolutionDiagrams, ArchitectureDiagram
   brandbook/                Slides of the brand guidelines and colour palette PDFs (used only by app/print)
 content/                    ALL content (it + en)
@@ -60,6 +62,7 @@ content/                    ALL content (it + en)
 lib/
   env.ts                    The ONLY module that reads process.env (server-only, validated)
   i18n.ts                   Locales, route table, href(), publicPath(), switchLocalePath(), defineLocalized(), toLocale()
+  search.ts                 buildSearchIndex(): applications, areas, regulations, news, projects, pages
   seo.ts                    pageMetadata(): canonical, hreflang, OG, description clamping, indexing switch
   structured-data.ts        JSON-LD builders
   fonts.ts, format.ts       Geist fonts, date formatting, cx()
@@ -154,6 +157,14 @@ endless rounded card grids; generic smiling stock photography.
 Don’t publish the image; transcribe it and add it to `SolutionCopy.diagrams` as `hub` (centre + satellites),
 `groups` (grouped list) or `cycle`. For a new diagram type, extend the `SolutionDiagram` union in `content/types.ts`
 and add a `case` in `components/ecosystem/SolutionDiagrams.tsx`.
+
+### 5.6 Search and solution finder
+
+- **Search (Ctrl/⌘ K or `/`)**: the index is generated from `content/` by `lib/search.ts` and served statically at
+  `/{locale}/search-index.json`. New applications, news, projects and regulations appear automatically. For a new
+  page, add a row to the `pages` list in `buildSearchIndex()`. The dialog fetches the index only on first open.
+- **Solution finder** (home, `#trova`): driven by each solution's `actors`, `family` and `roles` copy. A new product
+  appears in the right answers automatically; the result text is `roles[actor]`, falling back to `summary`.
 
 ## 6. SEO rules
 
