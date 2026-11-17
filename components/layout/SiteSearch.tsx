@@ -82,7 +82,6 @@ export function SiteSearch({ labels: t, indexUrl }: SearchLabels) {
   const [index, setIndex] = useState<Indexed[] | null>(null);
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
-  const [isMac, setIsMac] = useState(false);
   const id = useId();
 
   const open = () => {
@@ -106,8 +105,6 @@ export function SiteSearch({ labels: t, indexUrl }: SearchLabels) {
 
   // Global shortcuts: Ctrl/⌘ K anywhere, "/" outside text fields.
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- platform hint only known in the browser
-    setIsMac(/Mac|iPhone|iPad/.test(navigator.platform));
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
       const typing = target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName);
@@ -169,13 +166,10 @@ export function SiteSearch({ labels: t, indexUrl }: SearchLabels) {
         onClick={open}
         aria-label={t.label}
         aria-haspopup="dialog"
-        className="flex items-center gap-2 rounded-full p-2 text-ink-2 transition-colors hover:text-ink xl:border xl:border-line xl:py-2 xl:pl-3 xl:pr-2 xl:hover:border-line-strong"
+        className="flex items-center gap-2 rounded-full p-2 text-ink-2 transition-colors hover:text-ink xl:border xl:border-line xl:py-2 xl:pl-3 xl:pr-4 xl:hover:border-line-strong"
       >
         <Search size={17} />
         <span className="hidden text-[0.9375rem] xl:inline">{t.open}</span>
-        <kbd className="hidden rounded-md border border-line bg-paper-2 px-1.5 py-0.5 font-mono text-[0.6875rem] text-ink-3 xl:inline">
-          {isMac ? "⌘" : "Ctrl"} K
-        </kbd>
       </button>
 
       <dialog
