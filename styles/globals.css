@@ -306,6 +306,19 @@
 }
 @keyframes draw { to { stroke-dashoffset: 0; } }
 
+/* Hero diagram under the pointer: the network dims, the hovered node's links light up. */
+.eco-stage { transition: transform 0.6s var(--ease-out-quart); transform-style: preserve-3d; }
+.eco-stage .eco-link { transition: stroke-opacity 0.3s ease; }
+.eco-stage[data-hot] .eco-link { stroke-opacity: 0.1; }
+.pointer-link { stroke-dasharray: 4 6; animation: pointer-flow 0.9s linear infinite; }
+.pointer-ring { transform-box: fill-box; transform-origin: center; animation: pointer-ring 1.6s var(--ease-out-quart) infinite; }
+.pointer-end { animation: vt-fade-in 0.3s ease both; }
+@keyframes pointer-flow { to { stroke-dashoffset: -20; } }
+@keyframes pointer-ring {
+  from { transform: scale(0.6); opacity: 1; }
+  to { transform: scale(1.8); opacity: 0; }
+}
+
 /* Photographs get one consistent duotone treatment in the brand blue. */
 .duotone { position: relative; isolation: isolate; background: var(--color-brand-deep); }
 .duotone::after {

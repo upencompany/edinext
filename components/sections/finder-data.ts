@@ -10,7 +10,7 @@ export function finderProps(locale: Locale): FinderProps {
     locale,
     labels: ui[locale].finder,
     contactHref: href(locale, "contact"),
-    solutionsHref: href(locale, "solutions"),
+    solutionsHref: href(locale, "solutions", undefined, "catalogue-title"),
     actors: actors.map((a) => ({ id: a.id, name: a.name[locale], who: a.who[locale] })),
     families: families.map((f) => ({ id: f.id, index: f.index, name: f.name[locale], short: f.short[locale] })),
     apps: solutions.map((s) => ({

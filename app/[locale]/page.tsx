@@ -2,19 +2,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { EcosystemExplorer } from "@/components/ecosystem/EcosystemExplorer";
 import { explorerProps } from "@/components/ecosystem/explorer-data";
+import { DiagramPointer } from "@/components/ecosystem/DiagramPointer";
 import { FlowSignals } from "@/components/ecosystem/FlowSignals";
 import { RadialDiagram } from "@/components/ecosystem/RadialDiagram";
 import { AreasIndex } from "@/components/sections/AreasIndex";
 import { ContactBand } from "@/components/sections/ContactBand";
-import { finderProps } from "@/components/sections/finder-data";
-import { NewsList } from "@/components/sections/NewsList";
 import { NormTimeline } from "@/components/sections/NormTimeline";
-import { QualityStrip } from "@/components/sections/QualityStrip";
-import { SolutionFinder } from "@/components/sections/SolutionFinder";
 import { ArrowLink, ButtonLink, Kicker, SectionHead } from "@/components/ui/Editorial";
 import { ArrowRight } from "@/components/ui/Icons";
 import { company } from "@/content/company";
-import { news } from "@/content/news";
 import { home, servicesPage } from "@/content/pages";
 import { projects } from "@/content/projects";
 import { solutions } from "@/content/solutions";
@@ -53,7 +49,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             </h1>
             <p className="t-lede mt-10 max-w-2xl">{t.lede}</p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href={href(locale, "home", undefined, "trova")}>{t.ctaPrimary}</ButtonLink>
+              <ButtonLink href={href(locale, "solutions")}>{t.ctaPrimary}</ButtonLink>
               <ButtonLink href={href(locale, "contact")} variant="outline">
                 {t.ctaSecondary}
               </ButtonLink>
@@ -67,9 +63,10 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 {solutionsCount} {ui[locale].common.applications}
               </span>
             </div>
-            <div className="relative mt-2">
+            <div className="eco-stage relative mt-2">
               <RadialDiagram locale={locale} animate />
               <FlowSignals />
+              <DiagramPointer />
             </div>
             <figcaption className="t-meta mx-auto max-w-sm text-center text-ink-3">{t.figureCaption}</figcaption>
           </figure>
@@ -135,40 +132,30 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </div>
       </section>
 
-      {/* ── 03 · Solution finder ─────────────────────────────────────── */}
-      <section id="trova" aria-labelledby="finder-title" className="section-y">
-        <div className="wrap">
-          <SectionHead index="03" label={ui[locale].finder.label} title={ui[locale].finder.title} lede={ui[locale].finder.lede} id="finder-title" />
-          <div className="mt-14 md:mt-20">
-            <SolutionFinder {...finderProps(locale)} />
-          </div>
-        </div>
-      </section>
-
-      {/* ── 04 · Areas ───────────────────────────────────────────────── */}
+      {/* ── 03 · Areas ───────────────────────────────────────────────── */}
       <section aria-labelledby="areas-title" className="section-y">
         <div className="wrap">
-          <SectionHead index="04" label={t.areas.label} title={t.areas.title} lede={t.areas.lede} id="areas-title" />
+          <SectionHead index="03" label={t.areas.label} title={t.areas.title} lede={t.areas.lede} id="areas-title" />
           <div className="mt-14 md:mt-20">
             <AreasIndex locale={locale} />
           </div>
         </div>
       </section>
 
-      {/* ── 05 · Regulation ──────────────────────────────────────────── */}
+      {/* ── 04 · Regulation ──────────────────────────────────────────── */}
       <section aria-labelledby="norms-title" className="section-y bg-paper-2">
         <div className="wrap">
-          <SectionHead index="05" label={t.norms.label} title={t.norms.title} lede={t.norms.lede} id="norms-title" />
+          <SectionHead index="04" label={t.norms.label} title={t.norms.title} lede={t.norms.lede} id="norms-title" />
           <div className="mt-14 md:mt-16">
             <NormTimeline locale={locale} />
           </div>
         </div>
       </section>
 
-      {/* ── 06 · Services ────────────────────────────────────────────── */}
+      {/* ── 05 · Services ────────────────────────────────────────────── */}
       <section aria-labelledby="services-title" className="theme-dark section-y">
         <div className="wrap">
-          <SectionHead index="06" label={t.services.label} title={t.services.title} lede={t.services.lede} id="services-title" tone="dark" />
+          <SectionHead index="05" label={t.services.label} title={t.services.title} lede={t.services.lede} id="services-title" tone="dark" />
           <ol className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
             {services.map((s, i) => (
               <li key={s.id} className="bg-paper p-6 pb-10 transition-colors hover:bg-card md:p-8 md:pb-14" data-reveal style={{ ["--reveal-i" as string]: i }}>
@@ -186,12 +173,12 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </div>
       </section>
 
-      {/* ── 07 · Projects ────────────────────────────────────────────── */}
+      {/* ── 06 · Projects ────────────────────────────────────────────── */}
       <section aria-labelledby="projects-title" className="section-y">
         <div className="wrap">
           <div className="grid-12 gap-y-6">
             <div className="col-span-4 md:col-span-3" data-reveal>
-              <Kicker index="07">{t.projects.label}</Kicker>
+              <Kicker index="06">{t.projects.label}</Kicker>
             </div>
             <h2 id="projects-title" className="t-h2 col-span-4 md:col-span-9" data-reveal>
               {t.projects.title}
@@ -230,32 +217,6 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
                 <ArrowLink href={href(locale, "projects")}>{t.projects.link}</ArrowLink>
               </li>
             </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 08 · Quality ─────────────────────────────────────────────── */}
-      <section aria-labelledby="quality-title" className="pb-[clamp(4.5rem,3rem+6vw,9rem)]">
-        <div className="wrap">
-          <SectionHead index="08" label={t.quality.label} title={t.quality.title} id="quality-title" />
-          <div className="mt-12 border-y border-line">
-            <QualityStrip locale={locale} />
-          </div>
-        </div>
-      </section>
-
-      {/* ── 09 · News ────────────────────────────────────────────────── */}
-      <section aria-labelledby="news-title" className="section-y border-t border-line">
-        <div className="wrap">
-          <SectionHead
-            index="09"
-            label={t.news.label}
-            title={t.news.title}
-            id="news-title"
-            aside={<ArrowLink href={href(locale, "news")}>{t.news.link}</ArrowLink>}
-          />
-          <div className="mt-12">
-            <NewsList items={news.slice(0, 3)} locale={locale} />
           </div>
         </div>
       </section>

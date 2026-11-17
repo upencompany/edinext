@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { EcosystemExplorer } from "@/components/ecosystem/EcosystemExplorer";
+import { finderProps } from "@/components/sections/finder-data";
+import { SolutionFinder } from "@/components/sections/SolutionFinder";
 import { explorerProps } from "@/components/ecosystem/explorer-data";
 import { ContactBand } from "@/components/sections/ContactBand";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
@@ -74,9 +76,18 @@ export default async function SolutionsPage({ params }: PageProps<"/[locale]/sol
       </PageIntro>
 
       {/* Relationship map */}
+      <section id="trova" aria-labelledby="finder-title" className="section-y">
+        <div className="wrap">
+          <SectionHead index="A" label={t.finder.label} title={t.finder.title} lede={t.finder.lede} id="finder-title" />
+          <div className="mt-12 md:mt-16">
+            <SolutionFinder {...finderProps(locale)} />
+          </div>
+        </div>
+      </section>
+
       <section aria-labelledby="map-title" className="section-y border-y border-line bg-card">
         <div className="wrap">
-          <SectionHead index="A" label={t.ecosystem.actors} title={t.solutions.mapTitle} lede={t.solutions.mapLede} id="map-title" />
+          <SectionHead index="B" label={t.ecosystem.actors} title={t.solutions.mapTitle} lede={t.solutions.mapLede} id="map-title" />
           <div className="mt-14 md:mt-20">
             <EcosystemExplorer {...explorerProps(locale)} />
           </div>
@@ -87,7 +98,7 @@ export default async function SolutionsPage({ params }: PageProps<"/[locale]/sol
       <section aria-labelledby="catalogue-title" className="section-y">
         <div className="wrap">
           <SectionHead
-            index="B"
+            index="C"
             label={t.ecosystem.platforms}
             title={t.solutions.catalogueTitle}
             id="catalogue-title"
@@ -169,7 +180,7 @@ export default async function SolutionsPage({ params }: PageProps<"/[locale]/sol
       <section aria-labelledby="report-title" className="theme-dark">
         <div className="wrap grid-12 gap-y-8 py-20 md:py-28">
           <div className="col-span-4 md:col-span-3" data-reveal>
-            <Kicker index="C" tone="dark">
+            <Kicker index="D" tone="dark">
               {t.labels.data}
             </Kicker>
           </div>
