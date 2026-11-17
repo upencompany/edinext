@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import "@/styles/globals.css";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
-import { TopBar } from "@/components/layout/TopBar";
 import { RevealObserver } from "@/components/layout/RevealObserver";
 import { buildNav } from "@/components/layout/nav-data";
 import { JsonLd } from "@/components/ui/JsonLd";
@@ -63,7 +62,6 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
         >
           {t.skip}
         </a>
-        <TopBar />
         <SiteHeader nav={buildNav(locale)} />
         <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
           {children}

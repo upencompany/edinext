@@ -43,7 +43,7 @@ app/
   og/route.tsx              Dynamic Open Graph image
   sitemap.ts, robots.ts, manifest.ts, global-not-found.tsx
 components/
-  layout/                   Header, top bar, footer, navigation data, site search (Ctrl/⌘ K), scroll reveal
+  layout/                   Header, footer, navigation data, site search (Ctrl/⌘ K), scroll reveal
   ui/                       Building blocks: Kicker, SectionHead, PageIntro, ButtonLink, ArrowLink, Logo, ProductMark, CopyButton, Icons
   sections/                 Page sections: SolutionFinder (solutions page wizard), ContactBand, AreasIndex, NormTimeline, ServiceCycle, NewsList, SolutionDetail…
   ecosystem/                Diagrams: RadialDiagram (+ geometry), EcosystemExplorer, FlowSignals, HubDiagram, SolutionDiagrams, ArchitectureDiagram
@@ -169,7 +169,8 @@ and add a `case` in `components/ecosystem/SolutionDiagrams.tsx`.
 - **Search (Ctrl/⌘ K or `/`)**: the index is generated from `content/` by `lib/search.ts` and served statically at
   `/{locale}/search-index.json`. New applications, news, projects and regulations appear automatically. For a new
   page, add a row to the `pages` list in `buildSearchIndex()`. The dialog fetches the index only on first open.
-- **Solution finder** (solutions page, `#trova`): driven by each solution's `actors`, `family` and `roles` copy. A new product
+- **Solution finder** (`SolutionFinder` + `finderProps()`; currently not placed on any page — to show it, render
+  `<SolutionFinder {...finderProps(locale)} />` in a section): driven by each solution's `actors`, `family` and `roles` copy. A new product
   appears in the right answers automatically; the result text is `roles[actor]`, falling back to `summary`.
 
 ## 6. SEO rules

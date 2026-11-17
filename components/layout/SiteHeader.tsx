@@ -223,7 +223,7 @@ export function SiteHeader({ nav }: { nav: NavData }) {
               aria-expanded={mobileOpen}
               aria-controls={`${baseId}-mobile`}
               onClick={() => {
-                // The panel starts under the header, wherever the header is (the top bar may still be visible).
+                // The panel starts right under the header, wherever it currently is.
                 setPanelTop(headerRef.current?.getBoundingClientRect().bottom ?? 0);
                 setMobileOpen((v) => !v);
               }}
