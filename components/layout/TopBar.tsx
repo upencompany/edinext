@@ -1,8 +1,7 @@
 import { company } from "@/content/company";
-import type { Locale } from "@/lib/i18n";
 
-/** Thin contact strip above the header (as on the previous site): phone, e-mail, opening hours. Scrolls away. */
-export function TopBar({ locale }: { locale: Locale }) {
+/** Thin contact strip above the header (as on the previous site): phone and e-mail. Scrolls away. */
+export function TopBar() {
   return (
     <div className="theme-dark border-b border-line">
       <div className="wrap flex h-9 items-center gap-5 text-[0.8125rem] text-ink-2">
@@ -13,9 +12,6 @@ export function TopBar({ locale }: { locale: Locale }) {
         <a href={`mailto:${company.email}`} className="transition-colors hover:text-ink">
           {company.email}
         </a>
-        <p className="ml-auto hidden text-ink-3 md:block">
-          {company.hours[locale]}
-        </p>
       </div>
     </div>
   );

@@ -56,7 +56,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
         >
           {t.skip}
         </a>
-        <TopBar locale={locale} />
+        <TopBar />
         <SiteHeader nav={buildNav(locale)} />
         <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
           {children}
