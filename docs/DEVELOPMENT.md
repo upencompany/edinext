@@ -34,31 +34,46 @@ app/
     page.tsx                Home
     soluzioni/[slug]/       Product pages (nol, smart…) and area pages (clicprevenzione…)
     error.tsx, not-found.tsx
+    kit-stampa/             Press kit page (downloads, logos, colours, official copy)
+  print/                    Separate root layout: printable brand documents (never indexed)
+    [locale]/[doc]/         /print/{it|en}/{brand-guidelines|color-palette} → printed to PDF
   api/contact/route.ts      Contact form endpoint (security checks live here)
   og/route.tsx              Dynamic Open Graph image
   sitemap.ts, robots.ts, manifest.ts, global-not-found.tsx
 components/
   layout/                   Header, footer, navigation data, scroll reveal
-  ui/                       Building blocks: Kicker, SectionHead, PageIntro, ButtonLink, ArrowLink, Logo, ProductMark, Icons
+  ui/                       Building blocks: Kicker, SectionHead, PageIntro, ButtonLink, ArrowLink, Logo, ProductMark, CopyButton, Icons
   sections/                 Page sections: ContactBand, AreasIndex, NormTimeline, ServiceCycle, NewsList, SolutionDetail…
   ecosystem/                Diagrams: RadialDiagram (+ geometry), EcosystemExplorer, FlowSignals, HubDiagram, SolutionDiagrams, ArchitectureDiagram
+  brandbook/                Slides of the brand guidelines and colour palette PDFs (used only by app/print)
 content/                    ALL content (it + en)
   types.ts                  Content models (Solution, NewsArticle, Project, Family, Actor, Norm…)
-  solutions.ts              The 17 applications
+  solutions/                One file per application (<slug>.ts) + index.ts (order, getSolution…)
+  news/                     One file per article (<url-slug>.ts) + index.ts (sorted newest first)
+  projects.ts               Project case studies
   ecosystem.ts              Actors, areas, regulations
-  news.ts, projects.ts      News and project case studies
   pages.ts                  Page copy (home, company, services, compliance, careers, contact, privacy)
+  brand.ts                  Brand copy: press kit page, brand guidelines, official company descriptions
   ui.ts                     Interface dictionary (navigation, labels, buttons…) + fill()
   company.ts                Company facts
   architecture.ts           ReteAVIS architecture schema
 lib/
+  env.ts                    The ONLY module that reads process.env (server-only, validated)
   i18n.ts                   Locales, route table, href(), publicPath(), switchLocalePath(), defineLocalized(), toLocale()
   seo.ts                    pageMetadata(): canonical, hreflang, OG, description clamping, indexing switch
   structured-data.ts        JSON-LD builders
   fonts.ts, format.ts       Geist fonts, date formatting, cx()
+  color.ts                  Contrast ratios and colour helpers (brand documents)
+brand/                      Brand sources: vector logo master SVG, tokens.json (colours, logo variants)
+scripts/press-kit.mjs       Builds logo variants, the logo pack ZIP and the PDFs into public/press-kit/
 styles/globals.css          Design system (tokens, typography, .theme-dark, motion)
-public/brand, media, documents
+public/                     Static files only: brand/, media/, documents/, press-kit/ (generated)
 ```
+
+**Why content lives outside `app/`:** Next.js only enforces structure inside `app/` (routing). Business content is
+data, not routes, so it sits in `content/` as typed modules that pages import. Long collections (applications,
+news) are one file per entry, so adding an item never means editing a 1,000-line file. If non-developers should
+publish news later, a headless CMS (or MDX files) can replace `content/news/` without touching the pages.
 
 ## 3. Design patterns (and why)
 
@@ -122,14 +137,15 @@ endless rounded card grids; generic smiling stock photography.
 ### 5.3 Add a product (application)
 
 1. Optional logo: `public/brand/products/<slug>.png` (square, 256 px). Otherwise set `monogram`.
-2. Add a `Solution` object to `content/solutions.ts`: `slug`, `name`, `family`, `hasPage`, `actors`, `norms?`,
+2. Create `content/solutions/<slug>.ts` (copy an existing one) and list it in `content/solutions/index.ts`: `slug`, `name`, `family`, `hasPage`, `actors`, `norms?`,
    `related?`, `logo?` / `monogram?`, plus `it` / `en` copy (`expansion`, `tagline`, `summary`, `about`, `features`,
    `roles?`, `integrations?`, `diagrams?`, `metaTitle?` for long names).
 3. The product page, menu, catalogue, ecosystem diagram, area page and sitemap update **automatically**.
 
 ### 5.4 Add news, a job opening or a project
 
-- News: new object at the top of `content/news.ts` (`kind: "press" | "product" | "job"`). A `job` appears on the
+- News: create `content/news/<url-slug>.ts` (copy an existing article) and import it in `content/news/index.ts`
+  (`kind: "press" | "product" | "job"`; sorting by date is automatic). A `job` appears on the
   careers page and emits `JobPosting` structured data automatically.
 - Project: `content/projects.ts` — always reference the source article(s) in `news`.
 
@@ -160,6 +176,8 @@ and add a `case` in `components/ecosystem/SolutionDiagrams.tsx`.
   webhook call. Reuse this pattern for any new endpoint.
 - `dangerouslySetInnerHTML` is allowed only for JSON-LD (with `<` escaped) and the static `js` class script in `layout.tsx`.
 - Secrets live only in environment variables (`CONTACT_WEBHOOK_URL`, `CONTACT_WEBHOOK_SECRET`), never in the repository.
+- Environment variables are read **only** in `lib/env.ts` (marked `server-only`, values validated). Use the
+  `NEXT_PUBLIC_` prefix only for a value that must reach the browser: those values are inlined into public JavaScript.
 
 ## 8. Commands
 
@@ -168,6 +186,7 @@ npm run dev        # development server → http://localhost:3000
 npm run check      # TypeScript + ESLint
 npm run build      # production build (81+ static pages)
 npm start          # production server
+npm run press-kit  # regenerate logo variants + logo pack ZIP (add `-- --pdf --url=<site>` to reprint the PDFs)
 ```
 
 Before committing: `npm run check && npm run build`.
@@ -176,7 +195,7 @@ Before committing: `npm run check && npm run build`.
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Canonical origin (default `https://edinext.it`). Read at build time. |
+| `SITE_URL` | Canonical origin (default `https://edinext.it`). Read at build time. Server-only, so no `NEXT_PUBLIC_` prefix (the old name `NEXT_PUBLIC_SITE_URL` still works). |
 | `ALLOW_INDEXING` | `true` when hosting outside Vercel. `false` keeps production `noindex` (e.g. before the domain moves). On Vercel only production is indexable by default. |
 | `CONTACT_WEBHOOK_URL` | Endpoint receiving contact form messages (POST JSON). Without it the form points to the e-mail address. |
 | `CONTACT_WEBHOOK_SECRET` | Optional HMAC-SHA256 key → `X-Edinext-Signature` header on webhook calls. |

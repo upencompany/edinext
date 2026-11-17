@@ -401,7 +401,6 @@ export const pressKitPage = defineLocalized({
       copied: "Copiato",
       facts: "In sintesi",
     },
-    mockups: { label: "Applicazioni", title: "Il marchio in uso.", lede: "Visualizzazioni illustrative del marchio su oggetti e supporti reali. Sono concept, non fotografie di materiali prodotti o della sede aziendale. I PNG ad alta risoluzione sono inclusi nel pacchetto logo." },
     products: { label: "Marchi di prodotto", title: "Le applicazioni." },
     contact: {
       label: "Contatti stampa",
@@ -448,7 +447,6 @@ export const pressKitPage = defineLocalized({
       copied: "Copied",
       facts: "At a glance",
     },
-    mockups: { label: "Applications", title: "The brand in use.", lede: "Illustrative visualisations of the brand on physical objects and media. These are concepts, not photographs of produced materials or company premises. High-resolution PNGs are included in the logo pack." },
     products: { label: "Product marks", title: "The applications." },
     contact: {
       label: "Press contact",

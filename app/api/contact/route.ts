@@ -1,5 +1,6 @@
 import { createHmac } from "node:crypto";
 import { NextResponse } from "next/server";
+import { env } from "@/lib/env";
 import { toLocale } from "@/lib/i18n";
 
 /**
@@ -102,7 +103,7 @@ export async function POST(request: Request) {
     return json({ error: "validation", missing }, 422);
   }
 
-  const webhook = process.env.CONTACT_WEBHOOK_URL;
+  const webhook = env.contactWebhookUrl;
   if (!webhook) return json({ error: "unavailable" }, 503);
 
   const payload = JSON.stringify({
@@ -112,7 +113,7 @@ export async function POST(request: Request) {
     receivedAt: new Date().toISOString(),
   });
   const headers: Record<string, string> = { "Content-Type": "application/json" };
-  const secret = process.env.CONTACT_WEBHOOK_SECRET;
+  const secret = env.contactWebhookSecret;
   if (secret) headers["X-Edinext-Signature"] = `sha256=${createHmac("sha256", secret).update(payload).digest("hex")}`;
 
   try {

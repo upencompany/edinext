@@ -216,9 +216,10 @@ for (const f of files) {
   }
 }
 for (const scene of mockupScenes) {
-  const png = join(out, "mockups", `edinext-mockup-${scene}.png`);
-  if (!existsSync(png)) throw new Error(`Missing press-kit mockup: ${png}`);
-  zipFiles[`mockups/edinext-mockup-${scene}.png`] = readFileSync(png);
+  // The print-quality JPEGs (also used by the PDF) keep the pack small.
+  const jpg = join(out, "mockups", `edinext-mockup-${scene}.jpg`);
+  if (!existsSync(jpg)) throw new Error(`Missing press-kit mockup: ${jpg}`);
+  zipFiles[`mockups/edinext-mockup-${scene}.jpg`] = readFileSync(jpg);
 }
 const productsDir = join(root, "public", "brand", "products");
 for (const slug of ["clicprevenzione", "nola", "nol", "clicspesal", "sian", "clicvaccino", "spuv", "smart", "luna", "geco"]) {

@@ -21,7 +21,7 @@ every other branch or pull request gets a preview URL (automatically `noindex`).
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Canonical origin, default `https://edinext.it` |
+| `SITE_URL` | Canonical origin, default `https://edinext.it` (server-only; the old `NEXT_PUBLIC_SITE_URL` still works) |
 | `CONTACT_WEBHOOK_URL` | Endpoint receiving contact form messages (POST JSON). Without it the form points to info@edinext.it and never pretends a message was sent. |
 | `CONTACT_WEBHOOK_SECRET` | Optional HMAC-SHA256 key, sent as `X-Edinext-Signature` |
 | `ALLOW_INDEXING` | `true` to allow indexing outside Vercel; `false` to keep production `noindex` until the `edinext.it` domain points here |
