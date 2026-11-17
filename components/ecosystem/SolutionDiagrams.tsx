@@ -71,7 +71,7 @@ function Groups({ groups }: { groups: { name: string; items: string[] }[] }) {
 
 function Tile({ text, n }: { text: string; n: number }) {
   return (
-    <li className="rounded-2xl border border-line bg-paper-2 p-5">
+    <li className="cycle-tile rounded-2xl border border-line bg-paper-2 p-5" style={{ ["--i" as string]: n - 1 }}>
       <span className="t-meta text-accent tabular">{String(n).padStart(2, "0")}</span>
       <span className="mt-3 block text-lg font-medium leading-snug">{text}</span>
     </li>
@@ -82,10 +82,12 @@ function Cycle({ center, items }: { center: string; items: string[] }) {
   const top = items.slice(0, 3);
   const bottom = items.slice(3);
   return (
-    <div className="theme-dark relative overflow-hidden rounded-[1.75rem] p-5 md:p-10">
+    <div className="theme-dark relative overflow-hidden rounded-[1.75rem] p-5 md:p-10" style={{ ["--n" as string]: items.length }}>
       <svg aria-hidden="true" viewBox="0 0 400 400" className="pointer-events-none absolute -right-24 -top-24 h-[28rem] w-[28rem] opacity-40">
-        <circle cx="200" cy="200" r="170" fill="none" stroke="var(--color-brand)" strokeWidth="2" strokeDasharray="640 420" />
-        <path d="M330 90 l18 -6 -4 19" fill="none" stroke="var(--color-brand)" strokeWidth="2" />
+        <g className="cycle-orbit">
+          <circle cx="200" cy="200" r="170" fill="none" stroke="var(--color-brand)" strokeWidth="2" strokeDasharray="640 420" />
+          <path d="M330 90 l18 -6 -4 19" fill="none" stroke="var(--color-brand)" strokeWidth="2" />
+        </g>
       </svg>
       <ol className="relative grid gap-3 md:grid-cols-3">
         {top.map((t, i) => (

@@ -77,8 +77,7 @@ export function SolutionDetail({ solution: s, locale }: { solution: Solution; lo
             <Kicker index={family.index}>{family.name[locale]}</Kicker>
             <h1 className="mt-6">
               <span className="flex items-center gap-4 sm:gap-6">
-                <ProductMark src={s.logo} monogram={s.monogram} size={72} className="hidden sm:grid" />
-                <ProductMark src={s.logo} monogram={s.monogram} size={52} className="sm:hidden" />
+                <ProductMark src={s.logo} monogram={s.monogram} size={72} className="max-sm:!size-[52px]" transitionName={`mark-${s.slug}`} />
                 <span className="line-mask">
                   <span className="t-display block">{s.name}</span>
                 </span>

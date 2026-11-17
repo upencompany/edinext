@@ -75,18 +75,18 @@ export function ContactForm({ locale, copy, privacyHref, email }: { locale: Loca
     cx(
       "mt-2 block w-full rounded-xl border bg-card px-4 py-3.5 text-lg outline-none transition-colors placeholder:text-ink-3",
       "focus:border-brand focus:bg-paper focus-visible:outline-none focus:ring-4 focus:ring-brand/15",
-      field && errors[field] ? "border-[#b42318]" : "border-line hover:border-line-strong",
+      field && errors[field] ? "border-danger" : "border-line hover:border-line-strong",
     );
 
   return (
     <form noValidate onSubmit={onSubmit} className="space-y-8" aria-describedby={errorList.length ? `${id}-summary` : undefined}>
       {errorList.length > 0 && (
-        <div id={`${id}-summary`} ref={summaryRef} tabIndex={-1} role="alert" className="border-l-2 border-[#b42318] bg-[#fdf1ef] px-5 py-4">
-          <p className="font-semibold text-[#8a1c12]">{copy.errorsSummary}</p>
+        <div id={`${id}-summary`} ref={summaryRef} tabIndex={-1} role="alert" className="border-l-2 border-danger bg-danger-tint px-5 py-4">
+          <p className="font-semibold text-danger-ink">{copy.errorsSummary}</p>
           <ul className="mt-2 space-y-1">
             {errorList.map(([f, msg]) => (
               <li key={f}>
-                <a href={`#${fid(f)}`} className="link-inline text-[#8a1c12]">
+                <a href={`#${fid(f)}`} className="link-inline text-danger-ink">
                   {labels[f]}: {msg}
                 </a>
               </li>
@@ -140,7 +140,7 @@ export function ContactForm({ locale, copy, privacyHref, email }: { locale: Loca
             className={inputCls("name")}
           />
           {errors.name && (
-            <p id={`${fid("name")}-err`} className="mt-2 text-sm text-[#b42318]">
+            <p id={`${fid("name")}-err`} className="mt-2 text-sm text-danger">
               {errors.name}
             </p>
           )}
@@ -168,7 +168,7 @@ export function ContactForm({ locale, copy, privacyHref, email }: { locale: Loca
             className={inputCls("email")}
           />
           {errors.email && (
-            <p id={`${fid("email")}-err`} className="mt-2 text-sm text-[#b42318]">
+            <p id={`${fid("email")}-err`} className="mt-2 text-sm text-danger">
               {errors.email}
             </p>
           )}
@@ -210,7 +210,7 @@ export function ContactForm({ locale, copy, privacyHref, email }: { locale: Loca
           className={cx(inputCls("message"), "resize-y")}
         />
         {errors.message && (
-          <p id={`${fid("message")}-err`} className="mt-2 text-sm text-[#b42318]">
+          <p id={`${fid("message")}-err`} className="mt-2 text-sm text-danger">
             {errors.message}
           </p>
         )}
@@ -243,7 +243,7 @@ export function ContactForm({ locale, copy, privacyHref, email }: { locale: Loca
           </label>
         </div>
         {errors.privacy && (
-          <p id={`${fid("privacy")}-err`} className="ml-8 mt-2 text-sm text-[#b42318]">
+          <p id={`${fid("privacy")}-err`} className="ml-8 mt-2 text-sm text-danger">
             {errors.privacy}
           </p>
         )}

@@ -43,6 +43,8 @@ export interface NavData {
     menu: string;
     close: string;
     language: string;
+    themeDark: string;
+    themeLight: string;
     solutionsIntro: string;
   };
 }
@@ -104,6 +106,8 @@ export function buildNav(locale: Locale): NavData {
       menu: n.menu,
       close: n.close,
       language: n.language,
+      themeDark: n.themeDark,
+      themeLight: n.themeLight,
       solutionsIntro: t.solutions.lede,
     },
   };

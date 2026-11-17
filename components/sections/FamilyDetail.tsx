@@ -84,7 +84,7 @@ export function FamilyDetail({ family: f, locale }: { family: Family; locale: Lo
                   {f.index}.{i + 1}
                 </p>
                 <div className="col-span-4 md:col-span-4">
-                  <ProductMark src={s.logo} monogram={s.monogram} size={48} className="mb-4" />
+                  <ProductMark src={s.logo} monogram={s.monogram} size={48} className="mb-4" transitionName={`mark-${s.slug}`} />
                   <h3 className="t-h2 font-medium group-hover:text-brand-ink">{s.name}</h3>
                   <p className="t-label mt-3 text-ink-3">{c.expansion}</p>
                 </div>

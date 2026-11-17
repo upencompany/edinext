@@ -140,7 +140,7 @@ export default async function SolutionsPage({ params }: PageProps<"/[locale]/sol
                       const inner = (
                         <div className="grid grid-cols-[5.5rem_1fr] gap-x-4 gap-y-1 py-6 sm:grid-cols-[8rem_1fr_auto] md:py-7">
                           <p className="flex flex-col items-start gap-2 font-mono text-[1.05rem] font-medium text-ink group-hover:text-brand-ink">
-                            <ProductMark src={s.logo} monogram={s.monogram} size={36} />
+                            <ProductMark src={s.logo} monogram={s.monogram} size={36} transitionName={`mark-${s.slug}`} />
                             {s.name}
                           </p>
                           <div>

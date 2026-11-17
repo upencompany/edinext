@@ -10,10 +10,22 @@ interface LogoProps {
   className?: string;
   priority?: boolean;
   sizes?: string;
+  /** Swap to the reversed logo when the site-wide dark theme is on. */
+  adaptive?: boolean;
 }
 
 /** The official Edinext logo, used as supplied (only cropped and, on dark, reversed). */
-export function Logo({ variant = "wordmark", tone = "default", className, priority, sizes = "160px" }: LogoProps) {
+export function Logo({ adaptive, className, ...props }: LogoProps) {
+  if (!adaptive) return <LogoImage className={className} {...props} />;
+  return (
+    <>
+      <LogoImage className={`${className ?? ""} dark:hidden`} {...props} />
+      <LogoImage className={`${className ?? ""} hidden dark:block`} {...props} tone="reverse" priority={false} />
+    </>
+  );
+}
+
+function LogoImage({ variant = "wordmark", tone = "default", className, priority, sizes = "160px" }: Omit<LogoProps, "adaptive">) {
   const src =
     variant === "wordmark" ? (tone === "reverse" ? wordmarkReverse : wordmark) : tone === "reverse" ? lockupReverse : lockup;
   return (

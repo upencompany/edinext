@@ -15,6 +15,10 @@ import { organizationSchema, websiteSchema } from "@/lib/structured-data";
 
 export const dynamicParams = false;
 
+const themeScript =
+  "var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('theme');" +
+  "d.dataset.theme=t==='dark'||t==='light'?t:matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}catch(e){}";
+
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
@@ -34,8 +38,11 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
 }
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
-  colorScheme: "light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b1627" },
+  ],
+  colorScheme: "light dark",
 };
 
 export default async function LocaleLayout({ children, params }: LayoutProps<"/[locale]">) {
@@ -46,8 +53,8 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   return (
     <html lang={localeNames[locale].htmlLang} className={fontVariables} suppressHydrationWarning>
       <head>
-        {/* Enables reveal styles only when JavaScript runs — content stays visible otherwise. */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        {/* Enables reveal styles, and applies the saved (or system) theme before first paint. */}
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="flex min-h-dvh flex-col">
         <a

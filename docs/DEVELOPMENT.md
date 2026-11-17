@@ -15,7 +15,7 @@ Code, comments and docs are in English. Site content is Italian (default) and En
 3. **No invented facts.** Every business fact comes from edinext.it or from Edinext’s official documents. New
    statistics, clients, references or certifications need a source (note it in a comment).
 4. **Server Components by default.** `"use client"` only for small interactive pieces: `SiteHeader`,
-   `SiteSearch`, `EcosystemExplorer`, `SolutionFinder`, `FlowSignals`, `ServiceCycle`, `ScrollerControls`, `ContactForm`,
+   `SiteSearch`, `ThemeToggle`, `EcosystemExplorer`, `SolutionFinder`, `FlowSignals`, `DiagramPointer`, `ServiceCycle`, `ScrollerControls`, `ContactForm`,
    `RevealObserver`, `error.tsx`.
    Pass only serialisable data (strings, numbers, arrays) to client components — never functions.
 5. **Type safety = translation safety.** All multilingual content uses `Localized<T>` or `defineLocalized()`.
@@ -100,6 +100,12 @@ endless rounded card grids; generic smiling stock photography.
   `brand` (#0076B9 — from the logo), `accent` (#81B736 — the logo’s “X”). Green is for accents, dots and graphics only,
   never for body text.
 - **Dark section:** add `theme-dark` to the container; `text-ink`, `bg-paper` etc. flip automatically inside it.
+- **Dark theme (site-wide):** `<html data-theme="dark">`, set before first paint by the inline script in
+  `app/[locale]/layout.tsx` (saved choice, else the system setting) and toggled by `ThemeToggle`. Tokens are
+  re-mapped in `globals.css → :root[data-theme="dark"]`; use the `dark:` variant only for swaps tokens can't do
+  (e.g. the header logo, `Logo adaptive`). Never hard-code colours: they won't follow the theme.
+- **Shared-element morph:** `ProductMark transitionName={`mark-${slug}`}` morphs a mark from a list into the
+  product page. A name must be unique on a page.
 - **Type utilities:** `t-display`, `t-h1`, `t-h2`, `t-h3`, `t-lede`, `t-label` (mono, uppercase), `t-meta` (small mono).
 - **Layout:** `wrap` (max width + gutters), `grid-12` (4 → 12 columns), `section-y` (vertical rhythm).
 - **Shapes:** pill buttons (`rounded-full`), panels `rounded-2xl` / `rounded-[1.75rem]`.
@@ -185,7 +191,7 @@ and add a `case` in `components/ecosystem/SolutionDiagrams.tsx`.
 - User input only enters through `app/api/contact/route.ts`: origin check, JSON only, body size cap, per-IP rate
   limit, honeypot, minimum fill time, length limits, control-character stripping, HMAC-signed and time-limited
   webhook call. Reuse this pattern for any new endpoint.
-- `dangerouslySetInnerHTML` is allowed only for JSON-LD (with `<` escaped) and the static `js` class script in `layout.tsx`.
+- `dangerouslySetInnerHTML` is allowed only for JSON-LD (with `<` escaped) and the static `js`/theme script in `layout.tsx`.
 - Secrets live only in environment variables (`CONTACT_WEBHOOK_URL`, `CONTACT_WEBHOOK_SECRET`), never in the repository.
 - Environment variables are read **only** in `lib/env.ts` (marked `server-only`, values validated). Use the
   `NEXT_PUBLIC_` prefix only for a value that must reach the browser: those values are inlined into public JavaScript.

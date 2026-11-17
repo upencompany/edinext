@@ -10,6 +10,7 @@ import { cx } from "@/lib/format";
 import { localeNames, locales, publicPath, switchLocalePath } from "@/lib/i18n";
 import type { NavData, NavItem } from "./nav-data";
 import { SiteSearch } from "./SiteSearch";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function SiteHeader({ nav }: { nav: NavData }) {
   const pathname = publicPath(usePathname() ?? nav.homeHref);
@@ -115,7 +116,7 @@ export function SiteHeader({ nav }: { nav: NavData }) {
       >
         <div className="wrap flex h-(--header-h) items-center gap-6">
           <Link href={nav.homeHref} className="relative -m-2 block p-2 shrink-0" aria-label="Edinext — Home">
-            <Logo priority className="h-6 w-auto sm:h-7" sizes="(min-width: 640px) 110px, 92px" />
+            <Logo priority adaptive className="h-6 w-auto sm:h-7" sizes="(min-width: 640px) 110px, 92px" />
           </Link>
 
           <nav aria-label={nav.labels.nav} className="ml-auto hidden lg:block">
@@ -194,6 +195,7 @@ export function SiteHeader({ nav }: { nav: NavData }) {
 
           <div className="ml-auto flex items-center gap-2 lg:ml-4">
             <SiteSearch {...nav.search} />
+            <ThemeToggle labels={{ dark: nav.labels.themeDark, light: nav.labels.themeLight }} />
             <ul className="flex items-center" aria-label={nav.labels.language}>
               {other.map((l) => (
                 <li key={l}>
