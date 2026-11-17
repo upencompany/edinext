@@ -121,7 +121,8 @@ export function FamilyDetail({ family: f, locale }: { family: Family; locale: Lo
         </ol>
       </section>
 
-      {familyNorms.length > 0 && (
+      {/* A timeline needs at least two entries; a single regulation is already on the product page. */}
+      {familyNorms.length > 1 && (
         <section aria-labelledby="fam-norms" className="section-y bg-paper-2">
           <div className="wrap">
             <div className="grid-12 gap-y-6">
