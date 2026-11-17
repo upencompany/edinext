@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { EcosystemExplorer } from "@/components/ecosystem/EcosystemExplorer";
+import { explorerProps } from "@/components/ecosystem/explorer-data";
 import { FlowSignals } from "@/components/ecosystem/FlowSignals";
 import { RadialDiagram } from "@/components/ecosystem/RadialDiagram";
 import { AreasIndex } from "@/components/sections/AreasIndex";
@@ -120,12 +122,12 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </div>
       </section>
 
-      {/* ── 02 · Solution finder ─────────────────────────────────────── */}
-      <section id="trova" aria-labelledby="finder-title" className="section-y">
+      {/* ── 02 · Ecosystem ───────────────────────────────────────────── */}
+      <section aria-labelledby="eco-title" className="section-y">
         <div className="wrap">
-          <SectionHead index="02" label={ui[locale].finder.label} title={ui[locale].finder.title} lede={ui[locale].finder.lede} id="finder-title" />
+          <SectionHead index="02" label={t.ecosystem.label} title={t.ecosystem.title} lede={t.ecosystem.lede} id="eco-title" />
           <div className="mt-14 md:mt-20">
-            <SolutionFinder {...finderProps(locale)} />
+            <EcosystemExplorer {...explorerProps(locale)} compact />
           </div>
           <div className="mt-12 flex justify-end">
             <ArrowLink href={href(locale, "solutions")}>{t.ecosystem.link}</ArrowLink>
@@ -133,30 +135,40 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </div>
       </section>
 
-      {/* ── 03 · Areas ───────────────────────────────────────────────── */}
+      {/* ── 03 · Solution finder ─────────────────────────────────────── */}
+      <section id="trova" aria-labelledby="finder-title" className="section-y">
+        <div className="wrap">
+          <SectionHead index="03" label={ui[locale].finder.label} title={ui[locale].finder.title} lede={ui[locale].finder.lede} id="finder-title" />
+          <div className="mt-14 md:mt-20">
+            <SolutionFinder {...finderProps(locale)} />
+          </div>
+        </div>
+      </section>
+
+      {/* ── 04 · Areas ───────────────────────────────────────────────── */}
       <section aria-labelledby="areas-title" className="section-y">
         <div className="wrap">
-          <SectionHead index="03" label={t.areas.label} title={t.areas.title} lede={t.areas.lede} id="areas-title" />
+          <SectionHead index="04" label={t.areas.label} title={t.areas.title} lede={t.areas.lede} id="areas-title" />
           <div className="mt-14 md:mt-20">
             <AreasIndex locale={locale} />
           </div>
         </div>
       </section>
 
-      {/* ── 04 · Regulation ──────────────────────────────────────────── */}
+      {/* ── 05 · Regulation ──────────────────────────────────────────── */}
       <section aria-labelledby="norms-title" className="section-y bg-paper-2">
         <div className="wrap">
-          <SectionHead index="04" label={t.norms.label} title={t.norms.title} lede={t.norms.lede} id="norms-title" />
+          <SectionHead index="05" label={t.norms.label} title={t.norms.title} lede={t.norms.lede} id="norms-title" />
           <div className="mt-14 md:mt-16">
             <NormTimeline locale={locale} />
           </div>
         </div>
       </section>
 
-      {/* ── 05 · Services ────────────────────────────────────────────── */}
+      {/* ── 06 · Services ────────────────────────────────────────────── */}
       <section aria-labelledby="services-title" className="theme-dark section-y">
         <div className="wrap">
-          <SectionHead index="05" label={t.services.label} title={t.services.title} lede={t.services.lede} id="services-title" tone="dark" />
+          <SectionHead index="06" label={t.services.label} title={t.services.title} lede={t.services.lede} id="services-title" tone="dark" />
           <ol className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
             {services.map((s, i) => (
               <li key={s.id} className="bg-paper p-6 pb-10 transition-colors hover:bg-card md:p-8 md:pb-14" data-reveal style={{ ["--reveal-i" as string]: i }}>
@@ -174,12 +186,12 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </div>
       </section>
 
-      {/* ── 06 · Projects ────────────────────────────────────────────── */}
+      {/* ── 07 · Projects ────────────────────────────────────────────── */}
       <section aria-labelledby="projects-title" className="section-y">
         <div className="wrap">
           <div className="grid-12 gap-y-6">
             <div className="col-span-4 md:col-span-3" data-reveal>
-              <Kicker index="06">{t.projects.label}</Kicker>
+              <Kicker index="07">{t.projects.label}</Kicker>
             </div>
             <h2 id="projects-title" className="t-h2 col-span-4 md:col-span-9" data-reveal>
               {t.projects.title}
@@ -222,21 +234,21 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </div>
       </section>
 
-      {/* ── 07 · Quality ─────────────────────────────────────────────── */}
+      {/* ── 08 · Quality ─────────────────────────────────────────────── */}
       <section aria-labelledby="quality-title" className="pb-[clamp(4.5rem,3rem+6vw,9rem)]">
         <div className="wrap">
-          <SectionHead index="07" label={t.quality.label} title={t.quality.title} id="quality-title" />
+          <SectionHead index="08" label={t.quality.label} title={t.quality.title} id="quality-title" />
           <div className="mt-12 border-y border-line">
             <QualityStrip locale={locale} />
           </div>
         </div>
       </section>
 
-      {/* ── 08 · News ────────────────────────────────────────────────── */}
+      {/* ── 09 · News ────────────────────────────────────────────────── */}
       <section aria-labelledby="news-title" className="section-y border-t border-line">
         <div className="wrap">
           <SectionHead
-            index="08"
+            index="09"
             label={t.news.label}
             title={t.news.title}
             id="news-title"
