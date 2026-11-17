@@ -402,3 +402,10 @@ html.theme-switching::view-transition-new(root) {
 .scroller { scrollbar-width: thin; scrollbar-color: var(--color-line-strong) transparent; }
 .scroller::-webkit-scrollbar { height: 6px; }
 .scroller::-webkit-scrollbar-thumb { background: var(--color-line-strong); border-radius: 3px; }
+/* Scrollers with their own controls: no native bar, mouse can drag. */
+.scroller-bare { scrollbar-width: none; }
+.scroller-bare::-webkit-scrollbar { display: none; }
+@media (pointer: fine) {
+  .scroller-bare { cursor: grab; }
+  .scroller-bare[data-dragging] { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+}

@@ -17,28 +17,25 @@ export function NormTimeline({ locale, filter }: { locale: Locale; filter?: stri
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-end">
-        <ScrollerControls targetId={id} labels={[t.previous, t.next]} />
-      </div>
       <div
         id={id}
         role="region"
         aria-label={regionLabel}
         tabIndex={0}
-        className="scroller -mx-(--gutter) snap-x snap-mandatory scroll-px-(--gutter) overflow-x-auto px-(--gutter) pb-6"
+        className="scroller scroller-bare -mx-(--gutter) snap-x snap-mandatory scroll-px-(--gutter) overflow-x-auto px-(--gutter) pb-2"
       >
         <ol className="relative flex min-w-max">
           {items.map((n, i) => (
             <li
               key={n.id}
-              className="relative w-[78vw] max-w-[22rem] shrink-0 snap-start pr-8 sm:w-[19rem]"
+              className="group relative w-[78vw] max-w-[22rem] shrink-0 snap-start pr-8 sm:w-[19rem]"
               data-reveal
               style={{ ["--reveal-i" as string]: i }}
             >
-              <p className="t-h2 font-medium tabular text-ink">{n.year}</p>
+              <p className="t-h2 font-medium tabular text-ink transition-colors duration-300 group-hover:text-brand-ink">{n.year}</p>
               <span aria-hidden="true" className="relative mt-3 block h-3">
                 <span className="absolute inset-x-0 top-1/2 h-px bg-ink" />
-                <span className="relative block h-3 w-3 rounded-full border-2 border-ink bg-paper" />
+                <span className="relative block h-3 w-3 rounded-full border-2 border-ink bg-paper transition-all duration-300 group-hover:scale-125 group-hover:border-accent group-hover:bg-accent" />
               </span>
               <p className="t-label mt-6 text-brand-ink">{n.ref[locale]}</p>
               <h3 className="mt-2 text-lg font-semibold leading-snug tracking-tight">{n.subject[locale]}</h3>
@@ -62,6 +59,9 @@ export function NormTimeline({ locale, filter }: { locale: Locale; filter?: stri
             </li>
           ))}
         </ol>
+      </div>
+      <div className="mt-8">
+        <ScrollerControls targetId={id} labels={[t.previous, t.next]} />
       </div>
     </div>
   );
