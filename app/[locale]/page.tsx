@@ -9,6 +9,7 @@ import { AreasIndex } from "@/components/sections/AreasIndex";
 import { ContactBand } from "@/components/sections/ContactBand";
 import { NormTimeline } from "@/components/sections/NormTimeline";
 import { ArrowLink, ButtonLink, Kicker, SectionHead } from "@/components/ui/Editorial";
+import { CountUp } from "@/components/ui/CountUp";
 import { ArrowRight } from "@/components/ui/Icons";
 import { company } from "@/content/company";
 import { home, servicesPage } from "@/content/pages";
@@ -76,19 +77,23 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           {t.facts.map((f, i) => (
             <div
               key={f.label}
-              className="flex items-baseline gap-4 border-b border-line py-6 sm:pr-6 lg:flex-col lg:gap-2 lg:border-b-0 lg:border-r lg:py-8"
+              className="flex items-baseline gap-4 border-b border-line py-6 sm:pr-6 lg:flex-col lg:gap-2 lg:border-b-0 lg:border-r lg:py-8 lg:pl-6 lg:first:pl-0"
               data-reveal
               style={{ ["--reveal-i" as string]: i }}
             >
               <dt className="order-2 text-[0.9375rem] leading-snug text-ink-2 lg:order-2">{f.label}</dt>
-              <dd className="order-1 t-h2 shrink-0 font-medium tabular lg:order-1">{f.value}</dd>
+              <dd className="order-1 t-h2 shrink-0 font-medium tabular lg:order-1">
+                <CountUp value={f.value} />
+              </dd>
             </div>
           ))}
           <div className="flex items-baseline gap-4 py-6 lg:flex-col lg:gap-2 lg:py-8 lg:pl-6" data-reveal style={{ ["--reveal-i" as string]: 3 }}>
             <dt className="order-2 text-[0.9375rem] leading-snug text-ink-2">
               {company.address.street}, {company.address.postalCode}
             </dt>
-            <dd className="order-1 t-h2 font-medium">{company.address.city}</dd>
+            <dd className="order-1 t-h2 font-medium">
+              <CountUp value={company.address.city} />
+            </dd>
           </div>
         </dl>
       </section>

@@ -298,8 +298,7 @@ export function SolutionDetail({ solution: s, locale }: { solution: Solution; lo
             </h2>
             <ul className="border-t border-ink">
               {solutionNorms.map((n) => (
-                <li key={n.id} className="grid gap-2 border-b border-line py-6 md:grid-cols-[6rem_18rem_1fr] md:gap-8" data-reveal>
-                  <span className="t-h3 font-medium tabular">{n.year}</span>
+                <li key={n.id} className="grid gap-2 border-b border-line py-6 md:grid-cols-[minmax(0,20rem)_1fr] md:gap-10" data-reveal>
                   <span>
                     <span className="t-label block text-brand-ink">{n.ref[locale]}</span>
                     <span className="mt-1 block font-semibold">{n.subject[locale]}</span>

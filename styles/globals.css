@@ -376,6 +376,18 @@ html.theme-switching::view-transition-new(root) {
   6% { border-color: var(--color-accent); box-shadow: 0 0 0 1px var(--color-accent); }
 }
 
+/* Key figures: letters of a word rise in one after another (see CountUp). */
+@media (prefers-reduced-motion: no-preference) {
+  html.js .fact-letters > [aria-hidden] > span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(0.45em);
+    transition: opacity 0.5s ease, transform 0.6s var(--ease-out-quart);
+    transition-delay: calc(var(--i) * 60ms);
+  }
+  html.js .fact-letters.is-on > [aria-hidden] > span { opacity: 1; transform: none; }
+}
+
 /* Photographs get one consistent duotone treatment in the brand blue. */
 .duotone { position: relative; isolation: isolate; background: var(--color-brand-deep); }
 .duotone::after {
